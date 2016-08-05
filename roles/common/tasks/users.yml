@@ -1,0 +1,32 @@
+---
+- name: Create `timeoverflow` user
+  user:
+    name: timeoverflow
+    groups: timeoverflow
+    group: timeoverflow
+    append: yes
+    state: present
+    shell: /bin/bash
+
+- name: Write bash_profile for `timeoverflow` user
+  template:
+    src: bash_profile
+    dest: /home/timeoverflow/.bash_profile
+    owner: timeoverflow
+    group: timeoverflow
+    mode: 0644
+
+- name: Add `ubuntu` user to `timeoverflow` group
+  user:
+    name: ubuntu
+    groups: timeoverflow
+    group: ubuntu
+    shell: /bin/bash
+    append: yes
+
+- name: Write bash_profile for `ubuntu` user
+  template:
+    src: bash_profile
+    dest: /home/ubuntu/.bash_profile
+    group: timeoverflow
+    mode: 0644

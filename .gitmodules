@@ -1,0 +1,3 @@
+[submodule "vendor/ansible-elasticsearch"]
+	path = vendor/ansible-elasticsearch
+	url = git@github.com:elastic/ansible-elasticsearch

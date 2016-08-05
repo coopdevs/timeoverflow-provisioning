@@ -1,0 +1,8 @@
+[localhost]
+localhost ansible_connection=local
+
+[metal]
+metal.timeoverflow.org ansible_connection=ssh ansible_user=root
+
+[timeoverflow-dev]
+local.timeoverflow.org

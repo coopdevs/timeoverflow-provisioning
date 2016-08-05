@@ -1,0 +1,30 @@
+---
+- name: Install locale
+  locale_gen:
+    name: es_ES.UTF-8
+    state: present
+
+- name: Install postgresql_db ansible module dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - python-psycopg2
+    - libpq-dev
+
+- name: Install postgresql
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - postgresql
+    - postgresql-contrib
+
+- name: Write postgresql configuration
+  become: yes
+  become_user: postgres
+  template:
+    src: pg_hba.conf
+    dest: /etc/postgresql/9.4/main/pg_hba.conf
+    mode: 0640
+  notify: reload postgresql

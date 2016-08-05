@@ -1,0 +1,30 @@
+---
+- name: Install base system packages
+  apt:
+    name: "{{ item }}"
+    state: present
+    force: yes
+  with_items:
+    - build-essential
+    - ca-certificates
+    - git
+    - apt-transport-https
+
+- name: Add ruby repository
+  apt_repository:
+    repo: ppa:brightbox/ruby-ng
+    state: present
+    update_cache: yes
+
+- name: Install ruby 2.3
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - software-properties-common
+    - ruby2.3
+    - ruby2.3-dev
+
+- name: Install NodeJS - needed by ExecJS, in turn needed by sass, coffeescript etc
+  apt:
+    name: nodejs
