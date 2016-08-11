@@ -2,5 +2,5 @@
 - name: Install `bundler` gem (the only one we need globally)
   gem:
     name: bundler
-    state: present
+    state: latest
     user_install: no
