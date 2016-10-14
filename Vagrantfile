@@ -24,6 +24,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "development.yml"
     ansible.verbose = "v"
+    ansible.galaxy_role_file = "galaxy-roles.txt"
     ansible.ask_sudo_pass = true
     ansible.ask_vault_pass = true
 
