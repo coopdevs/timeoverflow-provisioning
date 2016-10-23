@@ -3,6 +3,9 @@
   become: yes
   roles:
     - common
+    - role: zzet.rbenv
+      rbenv_users:
+        - ubuntu
     - database
     - { role: vendor/ansible-elasticsearch, es_instance_name: 'elasticsearch' }
 
@@ -13,3 +16,7 @@
     database_name: timeoverflow_development
     database_user: timeoverflow
     rails_environment: development
+    rbenv:
+      env: user
+      version: v1.0.0
+      ruby_version: 2.3.0
