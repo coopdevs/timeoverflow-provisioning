@@ -111,12 +111,15 @@ echo "Mounting project folder..."
 mount_entry="lxc.mount.entry = $project_path /var/lib/lxc/$name/rootfs/home/$app_user/$project_name none bind,create=dir 0.0"
 echo "$mount_entry" | sudo tee -a /var/lib/lxc/"$name"/config > /dev/null
 echo
+echo "Create sudoers file for user $app_user"
+echo "$app_user ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /var/lib/lxc/$name/rootfs/etc/sudoers.d/1-"$app_user" > /dev/null
 # Reboot the container
 echo "Rebooting container"
 sudo lxc-stop -n "$name"
 sleep 5
 sudo lxc-start -n "$name"
 # Install python2.7 in container:
+sleep 2
 echo "Installing Python2.7"
 sudo lxc-attach -n "$name" -- sudo apt update
 sudo lxc-attach -n "$name" -- sudo apt install -y python2.7
