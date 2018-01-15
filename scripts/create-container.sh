@@ -3,26 +3,16 @@
 # Flags
 # set -e
 
-# Local default vars
-name="timeoverflow"
-template="/usr/share/lxc/templates/lxc-ubuntu"
-rls="xenial"
-lxc_config="/tmp/ubuntu.$name.conf"
-host="local.timeoverflow.org"
-project_name="timeoverflow"
-project_path="${PWD%/*}/$project_name"
-app_user="ubuntu"
-
 # External files
 # Get cfg values
 source "$PWD/scripts/config/lxc.cfg"
 
 # Check config file
 echo "Checking config file"
-if [ ! -e "$lxc_config" ] ; then
-  echo "Creating config file: $lxc_config"
+if [ ! -e "$LXC_CONFIG" ] ; then
+  echo "Creating config file: $LXC_CONFIG"
   network_link="$(brctl show | awk '{if ($1 != "bridge")  print $1 }')"
-  cat >"$lxc_config" <<EOL
+  cat >"$LXC_CONFIG" <<EOL
 # Network configuration
 lxc.network.type = veth
 lxc.network.flags = up
@@ -32,33 +22,33 @@ fi
 
 # Print configuration
 echo "* CONFIGURATION:"
-echo "  - Name: $name"
-echo "  - Template: $template"
-echo "  - LXC Configuration: $lxc_config"
-echo "  - Release: $rls"
-echo "  - Host: $host"
-echo "	- Project Name: $project_name"
-echo "	- Project Directory: $project_path"
+echo "  - Name: $NAME"
+echo "  - Template: $TEMPLATE"
+echo "  - LXC Configuration: $LXC_CONFIG"
+echo "  - Release: $RLS"
+echo "  - Host: $HOST"
+echo "	- Project Name: $PROJECT_NAME"
+echo "	- Project Directory: $PROJECT_PATH"
 echo
 
 echo
 echo
 
 # Check container
-exist_container="$(sudo lxc-ls $name)"
+exist_container="$(sudo lxc-ls "$NAME")"
 if [ -z "${exist_container}" ] ; then
-  echo "Creating container $name"
-  sudo lxc-create --name "$name" -f "$lxc_config" -t "$template" --logfile ./log/$name-create.log -- --release "$rls"
+  echo "Creating container $NAME"
+  sudo lxc-create --name "$NAME" -f "$LXC_CONFIG" -t "$TEMPLATE" --logfile "./log/$NAME-create.log" -- --release "$RLS"
 fi
 echo "Container ready"
 
 # Check if container is running, if not start
 count="0"
 while [ "$count" -lt 5 ] && [ -z "$is_running" ]; do
-  is_running=$(sudo lxc-ls --running -f | grep "$name")
+  is_running=$(sudo lxc-ls --running -f | grep "$NAME")
   if [ -z "$is_running" ] ; then
     echo "Starting container"
-    sudo lxc-start -n "$name" -d --logfile ./log/$name-start.log
+    sudo lxc-start -n "$NAME" -d --logfile "./log/$NAME-start.log"
     ((count++))
   fi
 done
@@ -73,54 +63,54 @@ fi
 echo "Container is running..."
 # Wait to start container and check the ip
 count="0"
-ip_container="$( sudo lxc-info -n "$name" -iH )"
+ip_container="$( sudo lxc-info -n "$NAME" -iH )"
 while [ "$count" -lt 5 ] && [ -z "$ip_container" ] ; do
   sleep 2
   echo "waiting for container ip..."
-  ip_container="$( sudo lxc-info -n "$name" -iH )"
+  ip_container="$( sudo lxc-info -n "$NAME" -iH )"
   ((count++))
 done
 echo "Container IP: $ip_container"
 echo
 
 # ADD IP TO HOSTS
-echo "Remove old host $host from /etc/hosts"
-sudo sed -i '/'$host'/d' /etc/hosts
-host_entry="$ip_container       $host"
+echo "Remove old host $HOST from /etc/hosts"
+sudo sed -i '/'"$HOST"'/d' /etc/hosts
+host_entry="$ip_container       $HOST"
 echo "Add '$host_entry' to /etc/hosts"
 sudo -- sh -c "echo $host_entry >> /etc/hosts"
 echo
 # SSH Key
-echo "Remove old $host from  ~/.ssh/know_hosts"
-ssh-keygen -R $host
+echo "Remove old $HOST from  ~/.ssh/know_hosts"
+ssh-keygen -R "$HOST"
 echo
-sudo lxc-ls -f $name
+sudo lxc-ls -f "$NAME"
 echo
 echo
 # Create app user and set password
-echo "Create user $app_user"
-sudo lxc-attach -n "$name" -- useradd -m $app_user
-echo "Setting password of $app_user..."
-sudo lxc-attach -n "$name" -- passwd $app_user
+echo "Create user $APP_USER"
+sudo lxc-attach -n "$NAME" -- useradd -m "$APP_USER"
+echo "Setting password of $APP_USER..."
+sudo lxc-attach -n "$NAME" -- passwd "$APP_USER"
 echo
-echo "Copy ssh key for $app_user"
-ssh-copy-id $app_user@$host
+echo "Copy ssh key for $APP_USER"
+ssh-copy-id "$APP_USER@$HOST"
 # Mount project folder
 echo "Mounting project folder..."
-mount_entry="lxc.mount.entry = $project_path /var/lib/lxc/$name/rootfs/home/$app_user/$project_name none bind,create=dir 0.0"
-echo "$mount_entry" | sudo tee -a /var/lib/lxc/"$name"/config > /dev/null
+mount_entry="lxc.mount.entry = $PROJECT_PATH /var/lib/lxc/$NAME/rootfs/home/$APP_USER/$PROJECT_NAME none bind,create=dir 0.0"
+echo "$mount_entry" | sudo tee -a /var/lib/lxc/"$NAME"/config > /dev/null
 echo
-echo "Create sudoers file for user $app_user"
-echo "$app_user ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /var/lib/lxc/$name/rootfs/etc/sudoers.d/1-"$app_user" > /dev/null
+echo "Create sudoers file for user $APP_USER"
+echo "$APP_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /var/lib/lxc/"$NAME"/rootfs/etc/sudoers.d/1-"$APP_USER" > /dev/null
 # Reboot the container
 echo "Rebooting container"
-sudo lxc-stop -n "$name"
+sudo lxc-stop -n "$NAME"
 sleep 5
-sudo lxc-start -n "$name"
+sudo lxc-start -n "$NAME"
 # Install python2.7 in container:
 sleep 2
 echo "Installing Python2.7"
-sudo lxc-attach -n "$name" -- sudo apt update
-sudo lxc-attach -n "$name" -- sudo apt install -y python2.7
+sudo lxc-attach -n "$NAME" -- sudo apt update
+sudo lxc-attach -n "$NAME" -- sudo apt install -y python2.7
 echo
-sudo lxc-ls -f $name
+sudo lxc-ls -f "$NAME"
