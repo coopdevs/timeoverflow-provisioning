@@ -46,14 +46,13 @@ echo
 
 # Check container
 exist_container="$(sudo lxc-ls $name)"
-echo "Check container ${exist_container}"
 if [ -z "${exist_container}" ] ; then
   echo "Creating container $name"
   sudo lxc-create --name "$name" -f "$lxc_config" -t "$template" --logfile ./log/$name-create.log -- --release "$rls"
 fi
 echo "Container ready"
 
-# Check if is running container, if not start
+# Check if container is running, if not start
 count="0"
 while [ "$count" -lt 5 ] && [ -z "$is_running" ]; do
   is_running=$(sudo lxc-ls --running -f | grep "$name")
@@ -77,7 +76,7 @@ count="0"
 ip_container="$( sudo lxc-info -n "$name" -iH )"
 while [ "$count" -lt 5 ] && [ -z "$ip_container" ] ; do
   sleep 2
-  echo "waiting container ip..."
+  echo "waiting for container ip..."
   ip_container="$( sudo lxc-info -n "$name" -iH )"
   ((count++))
 done
@@ -85,14 +84,14 @@ echo "Container IP: $ip_container"
 echo
 
 # ADD IP TO HOSTS
-echo "Remove old host $host form /etc/hosts"
+echo "Remove old host $host from /etc/hosts"
 sudo sed -i '/'$host'/d' /etc/hosts
 host_entry="$ip_container       $host"
 echo "Add '$host_entry' to /etc/hosts"
 sudo -- sh -c "echo $host_entry >> /etc/hosts"
 echo
 # SSH Key
-echo "Remove old $host of ~/.ssh/know_hosts"
+echo "Remove old $host from  ~/.ssh/know_hosts"
 ssh-keygen -R $host
 echo
 sudo lxc-ls -f $name
