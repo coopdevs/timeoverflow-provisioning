@@ -76,19 +76,20 @@ echo "Container IP: $ip_container"
 echo
 
 # ADD IP TO HOSTS
-echo "Remove old host $HOST from /etc/hosts"
+echo "Removing old host $HOST from /etc/hosts"
 sudo sed -i '/'"$HOST"'/d' /etc/hosts
 host_entry="$ip_container       $HOST"
 echo "Add '$host_entry' to /etc/hosts"
 sudo -- sh -c "echo $host_entry >> /etc/hosts"
 echo
 # SSH Key
-echo "Remove old $HOST from  ~/.ssh/know_hosts"
+
+echo "Removing old $HOST from  ~/.ssh/know_hosts"
 ssh-keygen -R "$HOST"
 echo
 sudo lxc-ls -f "$NAME"
 echo
-echo
+
 # Create app user and set password
 echo "Create user $APP_USER"
 sudo lxc-attach -n "$NAME" -- useradd -m "$APP_USER"
@@ -97,6 +98,7 @@ sudo lxc-attach -n "$NAME" -- passwd "$APP_USER"
 echo
 echo "Copy ssh key for $APP_USER"
 ssh-copy-id "$APP_USER@$HOST"
+
 # Mount project folder
 echo "Mounting project folder..."
 mount_entry="lxc.mount.entry = $PROJECT_PATH /var/lib/lxc/$NAME/rootfs/home/$APP_USER/$PROJECT_NAME none bind,create=dir 0.0"
@@ -104,11 +106,13 @@ echo "$mount_entry" | sudo tee -a /var/lib/lxc/"$NAME"/config > /dev/null
 echo
 echo "Create sudoers file for user $APP_USER"
 echo "$APP_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /var/lib/lxc/"$NAME"/rootfs/etc/sudoers.d/1-"$APP_USER" > /dev/null
+
 # Reboot the container
 echo "Rebooting container"
 sudo lxc-stop -n "$NAME"
 sleep 5
 sudo lxc-start -n "$NAME"
+
 # Install python2.7 in container:
 sleep 2
 echo "Installing Python2.7"
