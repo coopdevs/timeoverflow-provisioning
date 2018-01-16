@@ -7,6 +7,8 @@
 # Get cfg values
 source "$PWD/scripts/config/lxc.cfg"
 
+RETRIES=5
+
 # Check config file
 echo "Checking config file"
 if [ ! -e "$LXC_CONFIG" ] ; then
@@ -44,7 +46,7 @@ echo "Container ready"
 
 # Check if container is running, if not start
 count="0"
-while [ "$count" -lt 5 ] && [ -z "$is_running" ]; do
+while [ "$count" -lt $RETRIES ] && [ -z "$is_running" ]; do
   is_running=$(sudo lxc-ls --running -f | grep "$NAME")
   if [ -z "$is_running" ] ; then
     echo "Starting container"
@@ -64,7 +66,7 @@ echo "Container is running..."
 # Wait to start container and check the ip
 count="0"
 ip_container="$( sudo lxc-info -n "$NAME" -iH )"
-while [ "$count" -lt 5 ] && [ -z "$ip_container" ] ; do
+while [ "$count" -lt $RETRIES ] && [ -z "$ip_container" ] ; do
   sleep 2
   echo "waiting for container ip..."
   ip_container="$( sudo lxc-info -n "$NAME" -iH )"
