@@ -5,9 +5,3 @@
     - common
     - database
     - { role: vendor/ansible-elasticsearch, es_instance_name: 'elasticsearch' }
-
-  vars:
-    ansible_python_interpreter: /usr/bin/python2.7
-    database_name: timeoverflow_development
-    database_user: timeoverflow
-    rails_environment: development
