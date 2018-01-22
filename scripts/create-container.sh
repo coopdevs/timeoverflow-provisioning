@@ -47,9 +47,9 @@ fi
 echo "Container ready"
 
 # Check if container is running, if not start
-count="0"
-while [ "$count" -lt $RETRIES ] && [ -z "$is_running" ]; do
-  is_running=$(sudo lxc-ls --running -f | grep "$NAME")
+count=1
+while [ $count -lt $RETRIES ] && [ -z "$is_running" ]; do
+  is_running=$(sudo lxc-ls --running --filter "$NAME")
   if [ -z "$is_running" ] ; then
     echo "Starting container"
     sudo lxc-start -n "$NAME" -d -l INFO --logfile "./log/$NAME-start.log"
@@ -66,9 +66,9 @@ fi
 
 echo "Container is running..."
 # Wait to start container and check the ip
-count="0"
+count=1
 ip_container="$( sudo lxc-info -n "$NAME" -iH )"
-while [ "$count" -lt $RETRIES ] && [ -z "$ip_container" ] ; do
+while [ $count -lt $RETRIES ] && [ -z "$ip_container" ] ; do
   sleep 2
   echo "waiting for container ip..."
   ip_container="$( sudo lxc-info -n "$NAME" -iH )"
