@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # Flags
-# set -e
+set -e
+# Uncomment the following line to debug the script
+# set -x
 
 # External files
 # Get cfg values
