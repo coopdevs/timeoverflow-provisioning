@@ -1,0 +1,7 @@
+---
+- hosts: timeoverflow_servers
+  become: yes
+  roles:
+    - common
+    - database
+    - { role: vendor/ansible-elasticsearch, es_instance_name: 'elasticsearch' }

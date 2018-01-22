@@ -25,6 +25,6 @@
   become_user: postgres
   template:
     src: pg_hba.conf
-    dest: /etc/postgresql/9.4/main/pg_hba.conf
+    dest: /etc/postgresql/9.5/main/pg_hba.conf
     mode: 0640
   notify: reload postgresql

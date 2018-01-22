@@ -1,0 +1,5 @@
+---
+
+database_name: timeoverflow_development
+rails_environment: development
+
