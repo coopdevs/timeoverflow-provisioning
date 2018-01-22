@@ -84,8 +84,8 @@ host_entry="$ip_container       $HOST"
 echo "Add '$host_entry' to /etc/hosts"
 sudo -- sh -c "echo $host_entry >> /etc/hosts"
 echo
-# SSH Key
 
+# SSH Key
 echo "Removing old $HOST from  ~/.ssh/know_hosts"
 ssh-keygen -R "$HOST"
 echo
