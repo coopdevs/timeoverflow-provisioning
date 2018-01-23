@@ -29,7 +29,7 @@ echo "* CONFIGURATION:"
 echo "  - Name: $NAME"
 echo "  - Template: $TEMPLATE"
 echo "  - LXC Configuration: $LXC_CONFIG"
-echo "  - Release: $RLS"
+echo "  - Release: $RELEASE"
 echo "  - Host: $HOST"
 echo "	- Project Name: $PROJECT_NAME"
 echo "	- Project Directory: $PROJECT_PATH"
@@ -42,7 +42,7 @@ echo
 exist_container="$(sudo lxc-ls "$NAME")"
 if [ -z "${exist_container}" ] ; then
   echo "Creating container $NAME"
-  sudo lxc-create --name "$NAME" -f "$LXC_CONFIG" -t "$TEMPLATE" -l INFO --logfile "./log/$NAME-create.log" -- --release "$RLS"
+  sudo lxc-create --name "$NAME" -f "$LXC_CONFIG" -t "$TEMPLATE" -l INFO --logfile "./log/$NAME-create.log" -- --release "$RELEASE"
 fi
 echo "Container ready"
 
