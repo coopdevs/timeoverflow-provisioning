@@ -11,18 +11,17 @@ source "$PWD/scripts/config/lxc.cfg"
 
 RETRIES=5
 
-# Check config file
-echo "Checking config file"
-if [ ! -e "$LXC_CONFIG" ] ; then
-  echo "Creating config file: $LXC_CONFIG"
-  network_link="$(brctl show | awk '{if ($1 != "bridge")  print $1 }')"
-  cat >"$LXC_CONFIG" <<EOL
-# Network configuration
+# Create LXC config file
+echo "Creating config file: $LXC_CONFIG"
+cat > "$LXC_CONFIG" <<EOL
+# Network
 lxc.network.type = veth
 lxc.network.flags = up
-lxc.network.link = $network_link
+lxc.network.link = lxcbr0
+
+# Volumes
+lxc.mount.entry = $PROJECT_PATH /var/lib/lxc/$NAME/rootfs/opt/$PROJECT_NAME none bind,create=dir 0.0
 EOL
-fi
 
 # Print configuration
 echo "* CONFIGURATION:"
@@ -35,49 +34,46 @@ echo "	- Project Name: $PROJECT_NAME"
 echo "	- Project Directory: $PROJECT_PATH"
 echo
 
-echo
-echo
-
-# Check container
-exist_container="$(sudo lxc-ls "$NAME")"
+# Create container
+exist_container="$(sudo lxc-ls --filter ^"$NAME"$)"
 if [ -z "${exist_container}" ] ; then
   echo "Creating container $NAME"
-  sudo lxc-create --name "$NAME" -f "$LXC_CONFIG" -t "$TEMPLATE" -l INFO --logfile "./log/$NAME-create.log" -- --release "$RELEASE"
+  sudo lxc-create --name "$NAME" -f "$LXC_CONFIG" -t "$TEMPLATE" -l INFO -- --release "$RELEASE"
 fi
 echo "Container ready"
 
 # Check if container is running, if not start
 count=1
 while [ $count -lt $RETRIES ] && [ -z "$is_running" ]; do
-  is_running=$(sudo lxc-ls --running --filter "$NAME")
+  is_running=$(sudo lxc-ls --running --filter ^"$NAME"$)
   if [ -z "$is_running" ] ; then
     echo "Starting container"
-    sudo lxc-start -n "$NAME" -d -l INFO --logfile "./log/$NAME-start.log"
+    sudo lxc-start -n "$NAME" -d -l INFO
     ((count++))
   fi
 done
 
-# If not is running stop execution
+# If container is not running stop execution
 if [ -z "$is_running" ]; then
-  echo "Container not started..."
-  echo "STOP EXECUTION"
+  echo "Container not started, something is wrong."
+  echo "Please check log file /var/log/lxc/$NAME.log"
   exit 0
 fi
-
 echo "Container is running..."
-# Wait to start container and check the ip
+
+# Wait to start container and check the IP
 count=1
-ip_container="$( sudo lxc-info -n "$NAME" -iH )"
+ip_container="$(sudo lxc-info -n "$NAME" -iH)"
 while [ $count -lt $RETRIES ] && [ -z "$ip_container" ] ; do
   sleep 2
-  echo "waiting for container ip..."
-  ip_container="$( sudo lxc-info -n "$NAME" -iH )"
+  echo "Waiting for container IP..."
+  ip_container="$(sudo lxc-info -n "$NAME" -iH)"
   ((count++))
 done
 echo "Container IP: $ip_container"
 echo
 
-# ADD IP TO HOSTS
+# Add container IP to /etc/hosts
 echo "Removing old host $HOST from /etc/hosts"
 sudo sed -i '/'"$HOST"'/d' /etc/hosts
 host_entry="$ip_container       $HOST"
@@ -86,39 +82,26 @@ sudo -- sh -c "echo $host_entry >> /etc/hosts"
 echo
 
 # SSH Key
-echo "Removing old $HOST from  ~/.ssh/know_hosts"
+echo "Removing old $HOST from ~/.ssh/know_hosts"
 ssh-keygen -R "$HOST"
 echo
-sudo lxc-ls -f "$NAME"
+sudo lxc-ls -f --filter ^"$NAME"$
 echo
 
-# Create app user and set password
-echo "Create user $ADMIN_USER"
-sudo lxc-attach -n "$NAME" -- useradd -m "$ADMIN_USER"
-echo "Setting password of $ADMIN_USER..."
-sudo lxc-attach -n "$NAME" -- passwd "$ADMIN_USER"
-echo
-echo "Copy ssh key for $ADMIN_USER"
-ssh-copy-id "$ADMIN_USER@$HOST"
+# Add system user's SSH public key to root user in container
+ssh_path="$HOME/.ssh/id_rsa.pub"
+echo "Reading SSH public key from ${ssh_path}"
+read -r ssh_key < "$ssh_path"
+echo "Copying system user's SSH public key to root user in container"
+sudo lxc-attach -n "$NAME" -- /bin/bash -c "/bin/mkdir -p /root/.ssh && echo $ssh_key > /root/.ssh/authorized_keys"
 
-# Mount project folder
-echo "Mounting project folder..."
-mount_entry="lxc.mount.entry = $PROJECT_PATH /var/lib/lxc/$NAME/rootfs/opt/$PROJECT_NAME none bind,create=dir 0.0"
-echo "$mount_entry" | sudo tee -a /var/lib/lxc/"$NAME"/config > /dev/null
-echo
-echo "Create sudoers file for user $ADMIN_USER"
-echo "$ADMIN_USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /var/lib/lxc/"$NAME"/rootfs/etc/sudoers.d/1-"$ADMIN_USER" > /dev/null
-
-# Reboot the container
-echo "Rebooting container"
-sudo lxc-stop -n "$NAME"
-sleep 5
-sudo lxc-start -n "$NAME"
-
-# Install python2.7 in container:
-sleep 2
-echo "Installing Python2.7"
+# Install python2.7 in container
+echo "Installing Python2.7 in container $NAME"
 sudo lxc-attach -n "$NAME" -- sudo apt update
 sudo lxc-attach -n "$NAME" -- sudo apt install -y python2.7
-echo
-sudo lxc-ls -f "$NAME"
+
+# Ready to provision the container
+echo "Very well! LXC container $NAME has been created and configured"
+echo "You should be able to run the following commands now:"
+echo "> ansible-playbook playbooks/sys_admins.yml --limit=dev"
+echo "> ansible-playbook playbooks/provision.yml --limit=dev"
