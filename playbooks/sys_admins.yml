@@ -1,0 +1,10 @@
+---
+# To be able to execute this playbook you'll need access to
+# `root` user in the target hosts via SSH without password
+- name: Create all the users for system administration
+  hosts: timeoverflow
+  remote_user: root
+  roles:
+    - role: sys_admins
+      vars:
+        sys_admin_group: sysadmin

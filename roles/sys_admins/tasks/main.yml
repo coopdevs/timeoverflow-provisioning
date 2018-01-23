@@ -1,0 +1,27 @@
+---
+- name: Create group for system administration
+  group:
+    name: "{{ sys_admin_group }}"
+    state: present
+
+- name: Create users for system administration
+  user:
+    name: "{{ item.name }}"
+    state: "{{ item.state }}"
+    shell: "/bin/bash"
+    groups: "{{ sys_admin_group }}"
+  with_items: "{{ sys_admins }}"
+
+- name: Add SSH public keys to system administrators
+  authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ lookup('file', item.ssh_key) }}"
+    state: "{{ item.state }}"
+  when: item.state == "present"
+  with_items: "{{ sys_admins }}"
+
+- name: Copy sudoers configuration for system administrators
+  template:
+    src: sudoers.j2
+    dest: "/etc/sudoers.d/90-sys-admins"
+    mode: 0440

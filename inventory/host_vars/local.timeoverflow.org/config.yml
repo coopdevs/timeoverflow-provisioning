@@ -2,3 +2,7 @@
 database_name: timeoverflow_development
 rails_environment: development
 
+sys_admins:
+  - name: "{{ lookup('env', 'USER') }}"
+    ssh_key: "~/.ssh/id_rsa.pub"
+    state: present
