@@ -1,5 +1,3 @@
 ---
-
 database_name: db_name
 rails_environment: env
-

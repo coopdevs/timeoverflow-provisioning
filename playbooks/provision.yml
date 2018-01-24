@@ -1,5 +1,5 @@
 ---
-- hosts: timeoverflow_servers
+- hosts: timeoverflow
   become: yes
   roles:
     - common
