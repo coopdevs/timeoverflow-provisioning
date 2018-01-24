@@ -30,8 +30,8 @@ echo "  - Template: $TEMPLATE"
 echo "  - LXC Configuration: $LXC_CONFIG"
 echo "  - Release: $RELEASE"
 echo "  - Host: $HOST"
-echo "	- Project Name: $PROJECT_NAME"
-echo "	- Project Directory: $PROJECT_PATH"
+echo "  - Project Name: $PROJECT_NAME"
+echo "  - Project Directory: $PROJECT_PATH"
 echo
 
 # Create container
@@ -102,6 +102,10 @@ sudo lxc-attach -n "$NAME" -- sudo apt install -y python2.7
 
 # Ready to provision the container
 echo "Very well! LXC container $NAME has been created and configured"
-echo "You should be able to run the following commands now:"
-echo "> ansible-playbook playbooks/sys_admins.yml --limit=dev"
+echo
+echo "You should be able to access using:"
+echo "> ssh $USER@$HOST"
+echo
+echo "To install all the dependencies run:"
 echo "> ansible-playbook playbooks/provision.yml --limit=dev"
+echo
