@@ -2,6 +2,5 @@
 - hosts: timeoverflow
   become: yes
   roles:
-    - common
-    - database
-    - { role: vendor/ansible-elasticsearch, es_instance_name: 'elasticsearch' }
+    - role: vendor/geerlingguy.security
+      security_autoupdate_enabled: false

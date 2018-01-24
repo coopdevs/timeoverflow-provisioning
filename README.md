@@ -6,6 +6,17 @@ playbooks/
 └── sys_admins.yml
 ```
 
+## Requirements
+
+ - Ansible 2+
+
+Install dependencies:
+```
+ansible-galaxy install -r requirements.yml
+```
+
+Supported operating system for host: **Ubuntu 16.04 Xenial (64 bit)**
+
 ## sys_admins.yml
 This playbook will prepare the host to allow access to all the system administrators.
 
