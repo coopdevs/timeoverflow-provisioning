@@ -1,9 +1,15 @@
 ---
 # To be able to execute this playbook you'll need access to
-# `root` user in the target hosts via SSH without password
+# the target hosts via SSH without password either with `root`
+# or any of the system administrators.
+#
+# Usage:
+#
+# > ansible-playbook playbooks/sys_admins.yml --limit=dev -u root
+# > ansible-playbook playbooks/sys_admins.yml --limit=dev
+#
 - name: Create all the users for system administration
   hosts: timeoverflow
-  remote_user: root
   roles:
     - role: sys_admins
       vars:
