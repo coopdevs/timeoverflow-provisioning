@@ -25,3 +25,4 @@
     src: sudoers.j2
     dest: "/etc/sudoers.d/90-sys-admins"
     mode: 0440
+    group: "{{ sys_admin_group }}"
