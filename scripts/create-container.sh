@@ -5,8 +5,8 @@ set -e
 # Uncomment the following line to debug the script
 # set -x
 
-# External files
-# Get cfg values
+# Load configuration
+# shellcheck source=/dev/null
 source "$PWD/scripts/config/lxc.cfg"
 
 RETRIES=5
