@@ -10,7 +10,7 @@ playbooks/
 This playbook will prepare the host to allow access to all the system administrators.
 
 The first time you run it against a brand new host you need to run it as `root` user.
-You'll also need passwordless SSH access to the `root` access.
+You'll also need passwordless SSH access to the `root` user.
 ```
 ansible-playbook playbooks/sys_admins.yml --limit=dev -u root
 ```
@@ -21,7 +21,7 @@ For example in the case of `development` environment the script will assume that
 
 To run the playbook as a system administrator just use the following command:
 ```
-ansible-playbook playbooks/sys_admins.yml --limit=dev -u root
+ansible-playbook playbooks/sys_admins.yml --limit=dev
 ```
 Ansible will try to connect to the host using the system user.
 
