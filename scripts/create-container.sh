@@ -42,7 +42,7 @@ if [ -z "${exist_container}" ] ; then
 fi
 echo "Container ready"
 
-# Check if container is running, if not start
+# Check if container is running, if not start it
 count=1
 while [ $count -lt $RETRIES ] && [ -z "$is_running" ]; do
   is_running=$(sudo lxc-ls --running --filter ^"$NAME"$)
