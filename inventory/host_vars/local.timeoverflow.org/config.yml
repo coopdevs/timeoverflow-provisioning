@@ -2,10 +2,12 @@
 database_name: timeoverflow_development
 rails_environment: development
 
+development_user: "{{ lookup('env', 'USER') }}"
+
 sys_admins:
   - name: timeoverflow
     ssh_key: "~/.ssh/id_rsa.pub"
     state: present
-  - name: "{{ lookup('env', 'USER') }}"
+  - name: "{{ development_user }}"
     ssh_key: "~/.ssh/id_rsa.pub"
     state: present
