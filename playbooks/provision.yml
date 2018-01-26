@@ -4,3 +4,13 @@
   roles:
     - role: vendor/geerlingguy.security
       security_autoupdate_enabled: false
+    - common
+    - role: vendor/zzet.rbenv
+      rbenv:
+        env: user
+        version: v1.1.1
+        default_ruby: 2.3.0
+        rubies:
+          - version: 2.3.0
+      rbenv_users:
+        - timeoverflow

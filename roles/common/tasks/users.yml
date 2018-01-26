@@ -16,17 +16,11 @@
     group: timeoverflow
     mode: 0644
 
-- name: Add `ubuntu` user to `timeoverflow` group
-  user:
-    name: ubuntu
-    groups: timeoverflow
-    group: ubuntu
-    shell: /bin/bash
-    append: yes
-
-- name: Write bash_profile for `ubuntu` user
+- name: Create sudoers for `timeoverflow` user
   template:
-    src: bash_profile
-    dest: /home/ubuntu/.bash_profile
-    group: timeoverflow
-    mode: 0644
+    dest: /etc/sudoers.d/timeoverflow
+    mode: 0440
+    owner: root
+    group: root
+    src: sudoers.timeoverflow
+    validate: "/usr/sbin/visudo -cf %s"
