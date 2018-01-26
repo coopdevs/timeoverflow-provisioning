@@ -15,9 +15,9 @@ RETRIES=5
 echo "Creating config file: $LXC_CONFIG"
 cat > "$LXC_CONFIG" <<EOL
 # Network
-lxc.network.type = veth
-lxc.network.flags = up
-lxc.network.link = lxcbr0
+lxc.net.0.type = veth
+lxc.net.0.flags = up
+lxc.net.0.link = lxcbr0
 
 # Volumes
 lxc.mount.entry = $PROJECT_PATH /var/lib/lxc/$NAME/rootfs/opt/$PROJECT_NAME none bind,create=dir 0.0
