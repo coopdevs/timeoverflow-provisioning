@@ -1,2 +1,4 @@
 - src: geerlingguy.security
   version: 1.5.0
+- src: zzet.rbenv
+  version: 3.4.0

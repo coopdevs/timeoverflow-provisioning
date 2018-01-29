@@ -1,8 +1,5 @@
 ---
-- include: groups.yml
-- include: users.yml
-
-- include: install_packages.yml
-- include: ruby.yml
-- include: secrets.yml
-- include: sudoers.yml
+- import_tasks: groups.yml
+- import_tasks: users.yml
+- import_tasks: install_packages.yml
+- import_tasks: secrets.yml
