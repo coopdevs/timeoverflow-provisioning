@@ -129,7 +129,7 @@ ansible-playbook playbooks/sys_admins.yml --limit=dev -u root
 echo "Very well! LXC container $NAME has been created and configured"
 echo
 echo "You should be able to access using:"
-echo "> ssh $USER@$HOST"
+echo "> ssh timeoverflow@$HOST"
 echo
 echo "To install all the dependencies run:"
 echo "> ansible-playbook playbooks/provision.yml --limit=dev"
