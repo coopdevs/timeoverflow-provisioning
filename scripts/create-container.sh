@@ -15,9 +15,9 @@ RETRIES=5
 echo "Creating config file: $LXC_CONFIG"
 cat > "$LXC_CONFIG" <<EOL
 # Network
-lxc.network.type = veth
-lxc.network.flags = up
-lxc.network.link = lxcbr0
+lxc.net.0.type = veth
+lxc.net.0.flags = up
+lxc.net.0.link = lxcbr0
 
 # Volumes
 lxc.mount.entry = $PROJECT_PATH /var/lib/lxc/$NAME/rootfs/opt/$PROJECT_NAME none bind,create=dir 0.0
@@ -42,7 +42,7 @@ if [ -z "${exist_container}" ] ; then
 fi
 echo "Container ready"
 
-# Check if container is running, if not start
+# Check if container is running, if not start it
 count=1
 while [ $count -lt $RETRIES ] && [ -z "$is_running" ]; do
   is_running=$(sudo lxc-ls --running --filter ^"$NAME"$)
@@ -81,19 +81,40 @@ echo "Add '$host_entry' to /etc/hosts"
 sudo -- sh -c "echo $host_entry >> /etc/hosts"
 echo
 
-# SSH Key
+# Remove host SSH key
 echo "Removing old $HOST from ~/.ssh/know_hosts"
 ssh-keygen -R "$HOST"
-echo
-sudo lxc-ls -f --filter ^"$NAME"$
-echo
 
-# Add system user's SSH public key to root user in container
+# Read user's SSH public key
 ssh_path="$HOME/.ssh/id_rsa.pub"
 echo "Reading SSH public key from ${ssh_path}"
 read -r ssh_key < "$ssh_path"
-echo "Copying system user's SSH public key to root user in container"
+
+# Add system user's SSH public key to `root` user
+echo "Copying system user's SSH public key to 'root' user in container"
 sudo lxc-attach -n "$NAME" -- /bin/bash -c "/bin/mkdir -p /root/.ssh && echo $ssh_key > /root/.ssh/authorized_keys"
+
+# Find `uid` of project directory
+project_user=$(stat -c '%U' "$PROJECT_PATH")
+project_uid=$(id -u "$project_user")
+
+# Find `gid` of project directory
+project_group=$(stat -c '%G' "$PROJECT_PATH")
+project_gid=$(id -g "$project_group")
+
+# Delete existing user with same uid and gid of project directory
+existing_user=$(sudo lxc-attach -n "$NAME" -- id -nu "$project_uid" 2>&1)
+sudo lxc-attach -n "$NAME" -- /usr/sbin/userdel -r "$existing_user"
+
+# Create `timeoverflow` group with same `gid` of project directory
+sudo lxc-attach -n "$NAME" -- /usr/sbin/groupadd --gid "$project_gid" timeoverflow
+
+# Create `timeoverflow` user with same `uid` and `gid` of project directory
+sudo lxc-attach -n "$NAME" -- /usr/sbin/useradd --uid "$project_uid" --gid "$project_gid" --create-home --shell /bin/bash timeoverflow
+
+# Add system user's SSH public key to `timeoverflow` user
+echo "Copying system user's SSH public key to 'timeoverflow' user in container"
+sudo lxc-attach -n "$NAME" -- /bin/bash -c "/bin/mkdir -p /home/timeoverflow/.ssh && echo $ssh_key > /home/timeoverflow/.ssh/authorized_keys"
 
 # Install python2.7 in container
 echo "Installing Python2.7 in container $NAME"
@@ -108,7 +129,7 @@ ansible-playbook playbooks/sys_admins.yml --limit=dev -u root
 echo "Very well! LXC container $NAME has been created and configured"
 echo
 echo "You should be able to access using:"
-echo "> ssh $USER@$HOST"
+echo "> ssh timeoverflow@$HOST"
 echo
 echo "To install all the dependencies run:"
 echo "> ansible-playbook playbooks/provision.yml --limit=dev"
