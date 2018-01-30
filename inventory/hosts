@@ -1,5 +1,9 @@
 [dev]
 local.timeoverflow.org
 
+[staging]
+staging.timeoverflow.org ansible_host=51.15.80.46
+
 [timeoverflow:children]
 dev
+staging

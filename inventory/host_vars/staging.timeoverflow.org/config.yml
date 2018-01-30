@@ -1,0 +1,14 @@
+---
+database_name: timeoverflow_staging
+rails_environment: staging
+
+sys_admins:
+  - name: enrico
+    ssh_key: "../pub_keys/enrico.pub"
+    state: present
+  - name: dani
+    ssh_key: "../pub_keys/dani.pub"
+    state: present
+  - name: pau
+    ssh_key: "../pub_keys/pau.pub"
+    state: present
