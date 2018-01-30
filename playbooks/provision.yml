@@ -15,3 +15,6 @@
       rbenv_users:
         - timeoverflow
     - database
+    - role: vendor/elastic.elasticsearch
+      es_instance_name: timeoverflow
+      es_heap_size: "512m"
