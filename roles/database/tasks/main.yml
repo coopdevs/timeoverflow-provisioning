@@ -1,3 +1,21 @@
 ---
-- import_tasks: install_packages.yml
-- import_tasks: create_database.yml
+- include_role:
+    name: vendor/geerlingguy.postgresql
+  vars:
+    postgresql_hba_entries:
+      - { type: local, database: all, user: postgres, auth_method: peer }
+      - { type: host, database: all, user: all, address: '127.0.0.1/32', auth_method: md5 }
+    postgresql_locales:
+      - 'es_ES.UTF-8'
+    postgresql_databases:
+      - name: "{{ database_name }}"
+        lc_collate: 'es_ES.UTF-8'
+        lc_ctype: 'es_ES.UTF-8'
+        state: present
+    postgresql_users:
+      - name: "{{ database_user }}"
+        password: "{{ database_password }}"
+        db: "{{ database_name }}"
+        state: present
+
+- import_tasks: create_extensions.yml

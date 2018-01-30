@@ -1,0 +1,10 @@
+---
+- name: Add extensions to DB
+  become_user: postgres
+  postgresql_ext:
+    name: "{{ item }}"
+    db: "{{ database_name }}"
+  with_items:
+    - plpgsql
+    - hstore
+    - pg_trgm

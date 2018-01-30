@@ -5,11 +5,13 @@
     state: present
 
 - name: Create users for system administration
+  become: yes
   user:
     name: "{{ item.name }}"
     state: "{{ item.state }}"
     shell: "/bin/bash"
     groups: "{{ sys_admin_group }}"
+    append: yes
   with_items: "{{ sys_admins }}"
 
 - name: Add SSH public keys to system administrators

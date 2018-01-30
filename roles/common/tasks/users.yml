@@ -4,6 +4,7 @@
     name: timeoverflow
     groups: timeoverflow
     group: timeoverflow
+    append: yes
     state: present
     shell: /bin/bash
 

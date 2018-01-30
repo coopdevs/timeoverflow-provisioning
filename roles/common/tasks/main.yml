@@ -3,3 +3,4 @@
 - import_tasks: users.yml
 - import_tasks: install_packages.yml
 - import_tasks: secrets.yml
+- import_tasks: locales.yml
