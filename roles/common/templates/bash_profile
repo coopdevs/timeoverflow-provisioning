@@ -1,3 +1,0 @@
-set -a
-[ -f /etc/default/timeoverflow ] && . /etc/default/timeoverflow
-set +a
