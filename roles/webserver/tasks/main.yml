@@ -1,0 +1,16 @@
+---
+- name: Create systemd unit for timeoverflow unicorn
+  template:
+    src: unicorn_service.j2
+    dest: /etc/systemd/system/timeoverflow.service
+
+- name: Create crontab entries for scheduled job
+  cron:
+    name: send_recent_posts_to_online_members
+    user: timeoverflow
+    weekday: 1
+    hour: 9
+    minute: 0
+    state: present
+    job: >
+      /bin/bash -l -c 'cd /var/www/timeoverflow/current && bin/rails runner -e production '\''OrganizationNotifierService.new(Organization.all).send_recent_posts_to_online_members'\'' >> log/cron_log.log 2>&1'
