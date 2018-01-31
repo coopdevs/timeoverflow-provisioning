@@ -4,3 +4,4 @@
 - import_tasks: install_packages.yml
 - import_tasks: secrets.yml
 - import_tasks: locales.yml
+- import_tasks: directories.yml

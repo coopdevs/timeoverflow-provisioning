@@ -1,0 +1,16 @@
+---
+- name: "Create /var/www directory"
+  file:
+    path: "/var/www"
+    owner: root
+    group: root
+    mode: 0755
+    state: directory
+
+- name: "Create /var/www/timeoverflow directory"
+  file:
+    path: "/var/www/timeoverflow"
+    owner: timeoverflow
+    group: timeoverflow
+    mode: 02775
+    state: directory
