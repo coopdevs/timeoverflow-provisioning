@@ -24,3 +24,19 @@
     group: root
     src: sudoers.timeoverflow
     validate: "/usr/sbin/visudo -cf %s"
+
+- name: Add system administrator SSH public keys to `timeoverflow` user
+  authorized_key:
+    user: timeoverflow
+    key: "{{ lookup('file', item.ssh_key) }}"
+    state: "{{ item.state }}"
+  when: item.state == "present"
+  with_items: "{{ sys_admins }}"
+
+- name: Add developers SSH public keys to `timeoverflow` user
+  authorized_key:
+    user: timeoverflow
+    key: "{{ lookup('file', item.ssh_key) }}"
+    state: "{{ item.state }}"
+  when: item.state == "present"
+  with_items: "{{ developers }}"

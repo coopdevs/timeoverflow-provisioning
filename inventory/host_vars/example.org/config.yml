@@ -6,3 +6,8 @@ sys_admins:
   - name: sys_admin_username
     ssh_key: "../pub_keys/sys_admin_username.pub"
     state: present
+
+developers:
+  - name: developer_username
+    ssh_key: "../pub_keys/developer_username.pub"
+    state: present

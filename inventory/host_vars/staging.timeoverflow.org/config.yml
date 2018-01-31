@@ -12,3 +12,8 @@ sys_admins:
   - name: pau
     ssh_key: "../pub_keys/pau.pub"
     state: present
+
+developers:
+  - name: sergi
+    ssh_key: "../pub_keys/sergi.pub"
+    state: present
