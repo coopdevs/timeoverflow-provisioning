@@ -19,8 +19,6 @@
       set -a
       [ -f /etc/default/timeoverflow ] && . /etc/default/timeoverflow
       set +a
-  tags:
-    - hola
 
 - name: Create sudoers for `timeoverflow` user
   template:
