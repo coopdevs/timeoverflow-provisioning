@@ -8,13 +8,17 @@
     state: present
     shell: /bin/bash
 
-- name: Write bash_profile for `timeoverflow` user
-  template:
-    src: bash_profile
-    dest: /home/timeoverflow/.bash_profile
-    owner: timeoverflow
-    group: timeoverflow
-    mode: 0644
+# We need to add this block at the beginning of `.bashrc` since
+# it will exit if not running in interactive mode. The main reason
+# is that Capistrano uses non interactive mode to connect via SSH.
+- name: Load environment variables in bashrc for `timeoverflow` user
+  blockinfile:
+    path: /home/timeoverflow/.bashrc
+    insertbefore: BOF
+    block: |
+      set -a
+      [ -f /etc/default/timeoverflow ] && . /etc/default/timeoverflow
+      set +a
 
 - name: Create sudoers for `timeoverflow` user
   template:
@@ -24,3 +28,19 @@
     group: root
     src: sudoers.timeoverflow
     validate: "/usr/sbin/visudo -cf %s"
+
+- name: Add system administrator SSH public keys to `timeoverflow` user
+  authorized_key:
+    user: timeoverflow
+    key: "{{ lookup('file', item.ssh_key) }}"
+    state: "{{ item.state }}"
+  when: item.state == "present"
+  with_items: "{{ sys_admins }}"
+
+- name: Add developers SSH public keys to `timeoverflow` user
+  authorized_key:
+    user: timeoverflow
+    key: "{{ lookup('file', item.ssh_key) }}"
+    state: "{{ item.state }}"
+  when: item.state == "present"
+  with_items: "{{ developers }}"

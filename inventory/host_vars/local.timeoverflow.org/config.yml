@@ -11,3 +11,5 @@ sys_admins:
   - name: "{{ development_user }}"
     ssh_key: "~/.ssh/id_rsa.pub"
     state: present
+
+developers: []

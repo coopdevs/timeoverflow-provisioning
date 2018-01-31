@@ -1,6 +1,7 @@
 RAILS_ENV={{ rails_environment }}
-DB_NAME={{ database_name }}
-DATABASE_URL=postgres://{{ database_user }}:{{ database_password }}@localhost/{{ database_name }}?pool=20
+DATABASE_NAME={{ database_name }}
+DATABASE_USER={{ database_user }}
+DATABASE_PASSWORD={{ database_password }}
 SECRET_TOKEN={{ secret_token }}
 MAIL_LINK_HOST=www.timeoverflow.org
 MAILER_SENDER={{ mailer_sender }}
