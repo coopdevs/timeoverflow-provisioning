@@ -1,0 +1,17 @@
+[Unit]
+Description=Timeoverflow unicorn server
+
+[Service]
+Type=simple
+SyslogIdentifier=timeoverflow-unicorn
+User=timeoverflow
+PIDFile=/var/www/timeoverflow/shared/tmp/pids/unicorn.pid
+WorkingDirectory=/var/www/timeoverflow/current
+EnvironmentFile=-/etc/default/timeoverflow
+
+ExecStart=/home/timeoverflow/.rbenv/bin/rbenv exec bundle exec /var/www/timeoverflow/current/bin/unicorn_rails
+ExecReload=/bin/kill -s USR2 $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+
+[Install]
+WantedBy=multi-user.target
