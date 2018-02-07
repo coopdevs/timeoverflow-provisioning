@@ -14,3 +14,14 @@
     state: present
     job: >
       /bin/bash -l -c 'cd /var/www/timeoverflow/current && bin/rails runner -e production '\''OrganizationNotifierService.new(Organization.all).send_recent_posts_to_online_members'\'' >> log/cron_log.log 2>&1'
+
+- include_role:
+    name: vendor/jdauphant.nginx
+  vars:
+    nginx_configs:
+      upstream:
+        - upstream app_server { server localhost:8080 fail_timeout=0; }
+    nginx_sites:
+      timeoverflow:
+        template: timeoverflow.conf.j2
+        server_name: "{{ nginx.server_name }}"

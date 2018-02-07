@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name {{ item.value.server_name }};
+
+    location / {
+        proxy_pass http://app_server;
+    }
+}

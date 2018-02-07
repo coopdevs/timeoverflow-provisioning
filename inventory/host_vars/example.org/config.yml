@@ -11,3 +11,6 @@ developers:
   - name: developer_username
     ssh_key: "../pub_keys/developer_username.pub"
     state: present
+
+nginx:
+  server_name: "local.timeoverflow.org"
