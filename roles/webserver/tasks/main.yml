@@ -15,6 +15,10 @@
     job: >
       /bin/bash -l -c 'cd /var/www/timeoverflow/current && bin/rails runner -e production '\''OrganizationNotifierService.new(Organization.all).send_recent_posts_to_online_members'\'' >> log/cron_log.log 2>&1'
 
+# Only used in staging and production
+- import_tasks: letsencrypt.yml
+  when: rails_environment != "development"
+
 - include_role:
     name: vendor/jdauphant.nginx
   vars:
