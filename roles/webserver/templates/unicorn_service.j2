@@ -9,7 +9,7 @@ PIDFile=/var/www/timeoverflow/shared/tmp/pids/unicorn.pid
 WorkingDirectory=/var/www/timeoverflow/current
 EnvironmentFile=-/etc/default/timeoverflow
 
-ExecStart=/home/timeoverflow/.rbenv/bin/rbenv exec bundle exec /var/www/timeoverflow/current/bin/unicorn_rails
+ExecStart=/home/timeoverflow/.rbenv/bin/rbenv exec bundle exec /var/www/timeoverflow/current/bin/unicorn_rails -c /var/www/timeoverflow/current/config/unicorn.rb
 ExecReload=/bin/kill -s USR2 $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
 
