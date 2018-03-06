@@ -17,6 +17,9 @@ developers:
   - name: sergi
     ssh_key: "../pub_keys/sergi.pub"
     state: present
+  - name: maxim
+    ssh_key: "../pub_keys/maxim.pub"
+    state: present
 
 nginx:
   server_name: "staging.timeoverflow.org"
