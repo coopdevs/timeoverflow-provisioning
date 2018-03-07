@@ -60,3 +60,5 @@ To run it use the following command:
 ```
 ansible-playbook playbooks/provision.yml --limit=dev
 ```
+
+Add `--ask-vault-pass` to execute the command in `staging` and `production`
