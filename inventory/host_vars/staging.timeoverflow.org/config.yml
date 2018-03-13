@@ -23,3 +23,4 @@ developers:
 
 nginx:
   server_name: "staging.timeoverflow.org"
+  use_ssl: true

@@ -17,7 +17,7 @@
 
 # Only used in staging and production
 - import_tasks: letsencrypt.yml
-  when: rails_environment != "development"
+  when: nginx.use_ssl
 
 - include_role:
     name: vendor/jdauphant.nginx

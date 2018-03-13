@@ -16,3 +16,4 @@ developers: []
 
 nginx:
   server_name: "local.timeoverflow.org"
+  use_ssl: false
