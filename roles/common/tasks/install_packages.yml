@@ -16,3 +16,16 @@
 - name: Install NodeJS - needed by ExecJS, in turn needed by sass, coffeescript etc
   apt:
     name: nodejs
+
+- name: Install chromium chromedriver
+  apt:
+    name: chromium-chromedriver
+    state: present
+  when: rails_environment == "development"
+
+- name: Symlink chromedriver globally
+  file:
+    path: /usr/bin/chromedriver
+    src: /usr/lib/chromium-browser/chromedriver
+    state: link
+  when: rails_environment == "development"
