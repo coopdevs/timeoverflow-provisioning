@@ -1,6 +1,7 @@
 ---
 database_name: timeoverflow_development
 rails_environment: development
+database_role_attributes: SUPERUSER
 
 development_user: "{{ lookup('env', 'USER') }}"
 

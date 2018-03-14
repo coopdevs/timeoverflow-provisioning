@@ -4,19 +4,26 @@
   vars:
     postgresql_hba_entries:
       - { type: local, database: all, user: postgres, auth_method: peer }
-      - { type: host, database: all, user: all, address: '127.0.0.1/32', auth_method: md5 }
-      - { type: local, database: "{{ database_name }}", user: "{{ database_user }}", auth_method: md5 }
+      - { type: local, database: all, user: "{{ database_user }}", auth_method: peer }
     postgresql_locales:
       - 'es_ES.UTF-8'
-    postgresql_databases:
-      - name: "{{ database_name }}"
-        lc_collate: 'es_ES.UTF-8'
-        lc_ctype: 'es_ES.UTF-8'
-        state: present
+
+- import_role:
+    name: geerlingguy.postgresql
+    tasks_from: users
+  vars:
     postgresql_users:
       - name: "{{ database_user }}"
-        password: "{{ database_password }}"
-        db: "{{ database_name }}"
-        state: present
+        role_attr_flags: "{{ database_role_attributes }}"
+
+- import_role:
+    name: geerlingguy.postgresql
+    tasks_from: databases
+  vars:
+    postgresql_databases:
+      - name: "{{ database_name }}"
+        owner: "{{ database_user }}"
+        lc_collate: 'es_ES.UTF-8'
+        lc_ctype: 'es_ES.UTF-8'
 
 - import_tasks: create_extensions.yml
