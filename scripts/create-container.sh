@@ -26,9 +26,9 @@ EOL
 # Print configuration
 echo "* CONFIGURATION:"
 echo "  - Name: $NAME"
-echo "  - Template: $TEMPLATE"
-echo "  - LXC Configuration: $LXC_CONFIG"
+echo "  - Distribution: $DISTRIBUTION"
 echo "  - Release: $RELEASE"
+echo "  - LXC Configuration: $LXC_CONFIG"
 echo "  - Host: $HOST"
 echo "  - Project Name: $PROJECT_NAME"
 echo "  - Project Directory: $PROJECT_PATH"
@@ -38,7 +38,7 @@ echo
 exist_container="$(sudo lxc-ls --filter ^"$NAME"$)"
 if [ -z "${exist_container}" ] ; then
   echo "Creating container $NAME"
-  sudo lxc-create --name "$NAME" -f "$LXC_CONFIG" -t "$TEMPLATE" -l INFO -- --release "$RELEASE"
+  sudo lxc-create --name "$NAME" -f "$LXC_CONFIG" -t download -l INFO -- --dist "$DISTRIBUTION" --release "$RELEASE" --arch "$ARCH"
 fi
 echo "Container ready"
 
@@ -120,6 +120,9 @@ sudo lxc-attach -n "$NAME" -- /bin/bash -c "/bin/mkdir -p /home/timeoverflow/.ss
 echo "Installing Python2.7 in container $NAME"
 sudo lxc-attach -n "$NAME" -- sudo apt update
 sudo lxc-attach -n "$NAME" -- sudo apt install -y python2.7
+
+# Install SSH server in container
+sudo lxc-attach -n "$NAME" -- sudo apt install -y openssh-server
 
 # System administrators
 echo "Adding user $USER as system administrator to $HOST"
