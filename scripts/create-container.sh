@@ -114,7 +114,7 @@ sudo lxc-attach -n "$NAME" -- /usr/sbin/useradd --uid "$project_uid" --gid "$pro
 
 # Add system user's SSH public key to `timeoverflow` user
 echo "Copying system user's SSH public key to 'timeoverflow' user in container"
-sudo lxc-attach -n "$NAME" -- /bin/bash -c "/bin/mkdir -p /home/timeoverflow/.ssh && echo $ssh_key > /home/timeoverflow/.ssh/authorized_keys"
+sudo lxc-attach -n "$NAME" -- sudo -u timeoverflow -- sh -c "/bin/mkdir -p /home/timeoverflow/.ssh && echo $ssh_key > /home/timeoverflow/.ssh/authorized_keys"
 
 # Install python2.7 in container
 echo "Installing Python2.7 in container $NAME"
