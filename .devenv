@@ -1,10 +1,9 @@
-# Vars to use in lxc-create
 NAME="timeoverflow"
 DISTRIBUTION="ubuntu"
 RELEASE="xenial"
 ARCH="amd64"
-LXC_CONFIG="/tmp/ubuntu.$NAME.conf"
-HOST="local.$NAME.org"
+HOST="local.$NAME.coop"
 PROJECT_NAME="timeoverflow"
 PROJECT_PATH="${PWD%/*}/$PROJECT_NAME"
-ADMIN_USER="admin"
+DEVENV_USER="timeoverflow"
+DEVENV_GROUP="timeoverflow"
