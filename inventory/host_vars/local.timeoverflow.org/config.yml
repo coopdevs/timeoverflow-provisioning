@@ -14,6 +14,5 @@ sys_admins:
 
 developers: []
 
-nginx:
-  server_name: "local.timeoverflow.org"
-  use_ssl: false
+# Set 'development_environment' to "true" to skip SSL and nginx tasks
+development_environment: true

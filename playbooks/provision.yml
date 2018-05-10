@@ -18,5 +18,6 @@
     - role: vendor/elastic.elasticsearch
       es_instance_name: timeoverflow
       es_heap_size: "512m"
-    - webserver
+    - role: webserver
+      when: not development_environment
     - cacheserver
