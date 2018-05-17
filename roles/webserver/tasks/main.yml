@@ -15,9 +15,11 @@
     job: >
       /bin/bash -l -c 'cd /var/www/timeoverflow/current && bin/rails runner -e production '\''OrganizationNotifierService.new(Organization.all).send_recent_posts_to_online_members'\'' >> log/cron_log.log 2>&1'
 
-# Only used in staging and production
-- import_tasks: letsencrypt.yml
-  when: nginx.use_ssl
+- include_role:
+    name: vendor/coopdevs.certbot_nginx
+  vars:
+    domain_name: "{{ inventory_hostname }}"
+    letsencrypt_email: "{{ certificate_authority_email }}"
 
 - include_role:
     name: vendor/jdauphant.nginx
@@ -28,4 +30,4 @@
     nginx_sites:
       timeoverflow:
         template: timeoverflow.conf.j2
-        server_name: "{{ nginx.server_name }}"
+        server_name: "{{ inventory_hostname }}"
