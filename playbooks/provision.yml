@@ -26,3 +26,4 @@
         redis_version: 4.0.9
         redis_verify_checksum: true
         redis_checksum: "sha256:df4f73bc318e2f9ffb2d169a922dec57ec7c73dd07bccf875695dbeecd5ec510"
+    - role: background_jobs
