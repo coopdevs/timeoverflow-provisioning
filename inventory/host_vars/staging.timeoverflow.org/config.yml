@@ -21,5 +21,8 @@ developers:
     ssh_key: "../pub_keys/maxim.pub"
     state: present
 
+# Set 'development_environment' to "true" to skip SSL and nginx tasks
+development_environment: false
+
 # Let's Encrypt conf
 certificate_authority_email: "info@coopdevs.org"
