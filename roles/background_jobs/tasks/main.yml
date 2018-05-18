@@ -1,4 +1,19 @@
 ---
+# TODO: Remove this once https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1770481
+#       get solved and backported
+- name: create redis systemd service
+  template:
+    src: redis_service.j2
+    dest: /etc/systemd/system/redis_6379.service
+    mode: 0644
+
+# TODO: Remove this once https://bugs.launchpad.net/ubuntu/+source/systemd/+bug/1770481
+#       get solved and backported
+- name: set redis to start at boot
+  service:
+    name: redis_6379
+    enabled: yes
+
 - name: Create systemd unit for Sidekiq
   template:
     src: sidekiq_service.j2
