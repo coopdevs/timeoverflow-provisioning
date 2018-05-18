@@ -1,16 +1,11 @@
 # {{ ansible_managed }}
 server {
-    {% if nginx.use_ssl %}
     listen 443 ssl http2;
     listen [::]:443 ssl http2; # Listen on IPv6
     ssl_certificate /etc/letsencrypt/live/{{ item.value.server_name }}/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/{{ item.value.server_name }}/privkey.pem;
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
-    {% else %}
-    listen 80 default_server;
-    listen [::]:80 default_server; # Listen on IPv6
-    {% endif %}
 
     server_name {{ item.value.server_name }};
 
