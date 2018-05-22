@@ -2,3 +2,7 @@ timeoverflow ALL=(ALL) NOPASSWD: /bin/systemctl start timeoverflow
 timeoverflow ALL=(ALL) NOPASSWD: /bin/systemctl stop timeoverflow
 timeoverflow ALL=(ALL) NOPASSWD: /bin/systemctl restart timeoverflow
 timeoverflow ALL=(ALL) NOPASSWD: /bin/systemctl reload timeoverflow
+timeoverflow ALL=(ALL) NOPASSWD: /bin/systemctl start sidekiq
+timeoverflow ALL=(ALL) NOPASSWD: /bin/systemctl stop sidekiq
+timeoverflow ALL=(ALL) NOPASSWD: /bin/systemctl restart sidekiq
+timeoverflow ALL=(ALL) NOPASSWD: /bin/systemctl reload sidekiq
