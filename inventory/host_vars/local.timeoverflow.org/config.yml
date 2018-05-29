@@ -17,3 +17,6 @@ developers: []
 
 # Set 'development_environment' to "true" to skip SSL and nginx tasks
 development_environment: true
+
+# Set super admins email addresses
+superadmins: 'admin@timeoverflow.org'
