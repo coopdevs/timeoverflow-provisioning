@@ -5,4 +5,6 @@ DATABASE_PASSWORD={{ database_password }}
 SECRET_TOKEN={{ secret_token }}
 MAIL_LINK_HOST=www.timeoverflow.org
 MAILER_SENDER={{ mailer_sender }}
+{% if skylight_authentication is defined %}
 SKYLIGHT_AUTHENTICATION={{ skylight_authentication }}
+{% endif %}
