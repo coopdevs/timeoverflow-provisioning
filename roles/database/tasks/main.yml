@@ -1,5 +1,5 @@
 ---
-- include_role:
+- import_role:
     name: vendor/geerlingguy.postgresql
   vars:
     postgresql_hba_entries:
@@ -8,16 +8,16 @@
     postgresql_locales:
       - 'es_ES.UTF-8'
 
-- import_role:
-    name: geerlingguy.postgresql
+- include_role:
+    name: vendor/geerlingguy.postgresql
     tasks_from: users
   vars:
     postgresql_users:
       - name: "{{ database_user }}"
         role_attr_flags: "{{ database_role_attributes }}"
 
-- import_role:
-    name: geerlingguy.postgresql
+- include_role:
+    name: vendor/geerlingguy.postgresql
     tasks_from: databases
   vars:
     postgresql_databases:
