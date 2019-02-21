@@ -2,6 +2,7 @@
 - import_role:
     name: vendor/geerlingguy.postgresql
   vars:
+    postgresql_python_library: python3-psycopg2
     postgresql_hba_entries:
       - { type: local, database: all, user: postgres, auth_method: peer }
       - { type: local, database: all, user: "{{ database_user }}", auth_method: peer }
