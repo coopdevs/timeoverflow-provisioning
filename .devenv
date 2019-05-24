@@ -1,6 +1,6 @@
 NAME="timeoverflow"
 DISTRIBUTION="ubuntu"
-RELEASE="xenial"
+RELEASE="bionic"
 ARCH="amd64"
 HOST="local.$NAME.org"
 PROJECT_NAME="timeoverflow"

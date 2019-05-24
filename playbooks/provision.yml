@@ -8,10 +8,10 @@
     - role: vendor/zzet.rbenv
       rbenv:
         env: user
-        version: v1.1.1
-        default_ruby: 2.3.0
+        version: v1.1.2
+        default_ruby: 2.6.3
         rubies:
-          - version: 2.3.0
+          - version: 2.6.3
       rbenv_users:
         - timeoverflow
     - database
