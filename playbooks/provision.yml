@@ -9,9 +9,9 @@
       rbenv:
         env: user
         version: v1.1.2
-        default_ruby: 2.6.3
+        default_ruby: 2.5.5
         rubies:
-          - version: 2.6.3
+          - version: 2.5.5
       rbenv_users:
         - timeoverflow
     - database
