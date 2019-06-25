@@ -4,7 +4,7 @@
   roles:
     - role: vendor/geerlingguy.security
       security_autoupdate_enabled: false
-    - common
+    - role: common
     - role: vendor/zzet.rbenv
       rbenv:
         env: user
@@ -14,10 +14,11 @@
           - version: 2.3.0
       rbenv_users:
         - timeoverflow
-    - database
+      default_gems_file: ../files/custom-gems
+    - role: database
     - role: webserver
       when: not development_environment
-    - cacheserver
+    - role: cacheserver
     - role: DavidWittman.redis
       vars:
         redis_version: 4.0.9
