@@ -3,3 +3,8 @@
 # takes precedence.
 ansible_python_interpreter: /usr/bin/python3
 database_user: timeoverflow
+
+# Backups vars
+backups_role_postgresql_enabled: true
+backups_role_sudoers_enabled: true
+backups_role_db_names: ["{{ database_name }}"]
