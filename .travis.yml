@@ -9,3 +9,4 @@ install:
 
 script:
   - ansible-lint playbooks/*.yml --exclude vendor/
+  - yamllint **/*.yml
