@@ -25,7 +25,22 @@
       rbenv_users:
         - timeoverflow
       default_gems_file: ../files/custom-gems
-    - role: database
+    - role: vendor/geerlingguy.postgresql
+      vars:
+        postgresql_hba_entries:
+          - { type: local, database: all, user: postgres, auth_method: peer }
+          - { type: local, database: all, user: "{{ database_user }}", auth_method: peer }
+        postgresql_locales:
+          - 'es_ES.UTF-8'
+        postgresql_users:
+          - name: "{{ database_user }}"
+            role_attr_flags: "{{ database_role_attributes }}"
+        postgresql_databases:
+          - name: "{{ database_name }}"
+            owner: "{{ database_user }}"
+            lc_collate: 'es_ES.UTF-8'
+            lc_ctype: 'es_ES.UTF-8'
+        postgresql_python_library: python3-psycopg2 # related to ansible_python_interpreter
     - role: webserver
       when: not development_environment
     - role: cacheserver
