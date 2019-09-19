@@ -21,4 +21,4 @@ development_environment: true
 # Set super admins email addresses
 superadmins: 'admin@timeoverflow.org'
 
-backups_role_enabled:
+backups_role_enabled: false
