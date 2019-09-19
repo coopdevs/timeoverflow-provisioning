@@ -1,2 +1,5 @@
 ---
+# The used ubuntu images comes with /usr/bin/python linking to python2.7 and it
+# takes precedence.
+ansible_python_interpreter: /usr/bin/python3
 database_user: timeoverflow
