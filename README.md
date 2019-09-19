@@ -8,11 +8,24 @@ playbooks/
 
 ## Requirements
 
- - Ansible 2+
+* Python 3.7.4
+* Pip 19.2.3
+* Ansible 2.8
+
+First of all, follow the steps specified in https://github.com/pyenv/pyenv-installer to install Pyenv and Pyenv-Virtualenv. Make sure you follow all the steps including updating your shell rc file.
+
+Now, execute the following commands:
+
+```
+$ cd timeoverflow-provisioning
+$ pyenv install 3.7.4
+$ pyenv virtualenv 3.7.4 timeoverflow
+$ pyenv exec pip install -r requirements.txt
+```
 
 Install dependencies:
 ```
-ansible-galaxy install -r requirements.yml
+$ pyenv exec ansible-galaxy install -r requirements.yml
 ```
 
 Supported operating system for host: **Ubuntu 16.04 Xenial (64 bit)**
