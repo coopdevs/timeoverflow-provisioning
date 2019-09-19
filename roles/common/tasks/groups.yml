@@ -1,4 +1,5 @@
 ---
-- group:
+- name: Create 'timeoverflow' group
+  group:
     name: timeoverflow
     state: present
