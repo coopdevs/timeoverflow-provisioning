@@ -25,5 +25,3 @@
         owner: "{{ database_user }}"
         lc_collate: 'es_ES.UTF-8'
         lc_ctype: 'es_ES.UTF-8'
-
-- import_tasks: create_extensions.yml
