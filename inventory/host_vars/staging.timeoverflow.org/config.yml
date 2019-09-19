@@ -33,3 +33,6 @@ superadmins: 'admin@timeoverflow.org'
 
 # Let's Encrypt conf
 certificate_authority_email: "info@coopdevs.org"
+
+# Enable backups
+backups_role_enabled: true

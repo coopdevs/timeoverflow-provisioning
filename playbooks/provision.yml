@@ -46,3 +46,5 @@
     - role: cacheserver
     - role: geerlingguy.redis
     - role: background_jobs
+    - role: coopdevs.backups_role
+      when: backups_role_enabled
