@@ -1,19 +1,19 @@
 ---
 - name: Install base system packages
   apt:
-    name: "{{ item }}"
+    name: [
+      'build-essential',
+      'ca-certificates',
+      'git',
+      'apt-transport-https',
+      'curl',
+      'wget'
+    ]
     state: present
-    force: yes
-    update_cache: yes
-  with_items:
-    - build-essential
-    - ca-certificates
-    - git
-    - apt-transport-https
-    - curl
-    - wget
+    force: true
+    update_cache: true
 
-- name: Install NodeJS - needed by ExecJS, in turn needed by sass, coffeescript etc
+- name: Install NodeJS - needed by ExecJS, sass, coffeescript, etc.
   apt:
     name: nodejs
 
@@ -22,5 +22,3 @@
     name: chromium-chromedriver
     state: present
   when: rails_environment == "development"
-
-
