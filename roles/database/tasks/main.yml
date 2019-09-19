@@ -33,6 +33,7 @@
     contype: local
     databases: all
     method: peer
+    create: true
 
 - name: Add user
   become: yes

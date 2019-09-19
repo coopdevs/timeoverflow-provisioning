@@ -10,3 +10,9 @@ install:
 script:
   - ansible-lint playbooks/*.yml
   - yamllint **/*.yml
+  - sudo apt remove --purge postgresql-9.* postgresql-10
+  - sudo rm -rf /etc/postgresql/9.4/ /var/lib/postgresql/9.4/
+  - sudo apt-get update
+  - ansible-galaxy install -r requirements.yml
+  - ansible-playbook playbooks/sys_admins.yml --limit=travis_ci
+  - ansible-playbook playbooks/provision.yml --limit=travis_ci

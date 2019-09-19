@@ -1,0 +1,21 @@
+---
+database_name: timeoverflow_development
+rails_environment: development
+database_role_attributes: SUPERUSER
+
+development_user: "{{ lookup('env', 'USER') }}"
+
+sys_admins:
+  - name: timeoverflow
+    ssh_key: "../pub_keys/pau.pub"
+    state: present
+
+developers: []
+
+# Set 'development_environment' to "true" to skip SSL and nginx tasks
+development_environment: true
+
+# Set super admins email addresses
+superadmins: 'admin@timeoverflow.org'
+
+backups_role_enabled: false
