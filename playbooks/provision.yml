@@ -3,7 +3,17 @@
   become: yes
   roles:
     - role: vendor/geerlingguy.security
-      security_autoupdate_enabled: false
+      vars:
+        security_autoupdate_enabled: true
+        security_autoupdate_blacklist:
+          - postgresql
+          - postgresql-contrib
+          - libpq-dev
+          - nodejs
+          - nginx
+          - certbot
+          - python-certbot-nginx
+          - memcached
     - role: common
     - role: vendor/zzet.rbenv
       rbenv:
