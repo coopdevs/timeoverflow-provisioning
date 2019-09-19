@@ -50,7 +50,7 @@ sys_admins:
 The first time you run it against a brand new host you need to run it as `root` user.
 You'll also need passwordless SSH access to the `root` user.
 ```
-ansible-playbook playbooks/sys_admins.yml --limit=<environment_name> -u root
+$ ansible-playbook playbooks/sys_admins.yml --limit=<environment_name> -u root
 ```
 
 For the following executions, the script will asssume that your user is included in the system administrators list for the given host.
@@ -59,11 +59,11 @@ For example in the case of `development` environment the script will assume that
 
 To run the playbook as a system administrator just use the following command:
 ```
-ansible-playbook playbooks/sys_admins.yml --limit=dev
+$ ansible-playbook playbooks/sys_admins.yml --limit=dev
 ```
 Ansible will try to connect to the host using the system user. If your user as a system administrator is different than your local system user please run this playbook with the correct user using the `-u` flag.
 ```
-ansible-playbook playbooks/sys_admins.yml --limit=dev -u <username>
+$ ansible-playbook playbooks/sys_admins.yml --limit=dev -u <username>
 ```
 
 ## provision.yml

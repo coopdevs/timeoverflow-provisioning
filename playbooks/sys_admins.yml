@@ -11,6 +11,7 @@
 - name: Create all the users for system administration
   hosts: timeoverflow
   roles:
-    - role: sys_admins
+    - role: coopdevs.sys-admins-role
+      become: yes
       vars:
         sys_admin_group: sysadmin
