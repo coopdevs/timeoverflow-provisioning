@@ -7,7 +7,7 @@ sys_admins:
   - name: enrico
     ssh_key: "../pub_keys/enrico.pub"
     state: present
-  - name: dani
+  - name: daniel
     ssh_key: "../pub_keys/dani.pub"
     state: present
   - name: pau
