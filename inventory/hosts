@@ -5,7 +5,7 @@ timeoverflow.local
 staging.timeoverflow.org ansible_host=163.172.169.55
 
 [staging18]
-staging18.timeoverflow.org ansible_host=163.172.169.55
+staging18.timeoverflow.org ansible_host=116.203.236.102
 
 [timeoverflow:children]
 dev
