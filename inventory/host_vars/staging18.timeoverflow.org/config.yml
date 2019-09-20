@@ -1,7 +1,7 @@
 ---
 database_name: timeoverflow_staging
 rails_environment: staging
-database_role_attributes: # Left empty
+database_role_attributes: NOSUPERUSER
 
 sys_admins:
   - name: enrico

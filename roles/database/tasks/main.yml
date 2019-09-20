@@ -1,0 +1,54 @@
+---
+- name: Install gnupg2
+  apt:
+    name: gnupg2
+
+- name: Add apt key
+  apt_key:
+    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+
+- name: Add PostgreSQL 9.4 PPA repository
+  apt_repository:
+    repo: deb https://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main
+    filename: pgdg
+
+- name: APT upgrade
+  apt:
+    update_cache: true
+    upgrade: true
+
+- name: Ensure all configured locales are present.
+  locale_gen: "name=es_ES.UTF-8 state=present"
+
+- name: Install PostgreSQL 9.4 and dependencies
+  apt:
+    name:
+      - postgresql-9.4
+      - libpq-dev
+      - python3-psycopg2
+
+- name: Add hba entry for user
+  postgresql_pg_hba:
+    dest: /etc/postgresql/9.4/main/pg_hba.conf
+    users: "{{ database_user }}"
+    contype: local
+    databases: all
+    method: peer
+
+- name: Add user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ database_user }}"
+    role_attr_flags: "{{ database_role_attributes }}"
+
+- name: Create db
+  become: yes
+  become_user: postgres
+  postgresql_db:
+    name: "{{ database_name }}"
+    owner: "{{ database_user }}"
+    lc_collate: 'es_ES.UTF-8'
+    lc_ctype: 'es_ES.UTF-8'
+    encoding: 'UTF-8'
+    template: 'template0'
