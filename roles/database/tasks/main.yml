@@ -10,7 +10,7 @@
 - name: Add PostgreSQL 9.4 PPA repository
   apt_repository:
     repo: deb https://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main
-    filename: pgdg.list
+    filename: pgdg
 
 - name: APT upgrade
   apt:
