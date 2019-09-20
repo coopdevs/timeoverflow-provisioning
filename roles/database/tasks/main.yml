@@ -36,12 +36,14 @@
     method: peer
 
 - name: Add user
+  become: yes
   become_user: postgres
   postgresql_user:
     name: "{{ database_user }}"
     role_attr_flags: "{{ database_role_attributes }}"
 
 - name: Create db
+  become: yes
   become_user: postgres
   postgresql_db:
     name: "{{ database_name }}"
