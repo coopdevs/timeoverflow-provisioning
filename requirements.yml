@@ -3,7 +3,7 @@
 - src: geerlingguy.security
   version: 1.8.1
 - src: zzet.rbenv
-  version: 3.4.3
+  version: 3.4.7
 - src: elastic.elasticsearch
   version: 5.5.1
 - src: jdauphant.nginx
