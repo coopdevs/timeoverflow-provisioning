@@ -12,10 +12,9 @@
     repo: deb https://apt.postgresql.org/pub/repos/apt/ bionic-pgdg main
     filename: pgdg
 
-- name: APT upgrade
+- name: APT update
   apt:
     update_cache: true
-    upgrade: true
 
 - name: Ensure all configured locales are present.
   locale_gen: "name=es_ES.UTF-8 state=present"
