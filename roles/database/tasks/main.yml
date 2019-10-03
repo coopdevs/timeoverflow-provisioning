@@ -23,7 +23,6 @@
   apt:
     name:
       - postgresql-9.4
-      - postgresql-contrib-9.4
       - libpq-dev
       - python3-psycopg2
 
