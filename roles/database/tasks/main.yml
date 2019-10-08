@@ -52,3 +52,10 @@
     lc_ctype: 'es_ES.UTF-8'
     encoding: 'UTF-8'
     template: 'template0'
+
+- name: Adds Hstore extension to the database
+  become: yes
+  become_user: postgres
+  postgresql_ext:
+    name: hstore
+    db: "{{ database_name }}"
