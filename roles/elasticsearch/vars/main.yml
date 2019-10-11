@@ -1,0 +1,3 @@
+sysd_script: "/usr/lib/systemd/system/elasticsearch.service"
+es_instance_name: timeoverflow
+instance_sysd_script: "{{sysd_script | dirname }}/{{es_instance_name}}_{{sysd_script | basename}}"
