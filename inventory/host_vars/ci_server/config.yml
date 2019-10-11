@@ -9,6 +9,9 @@ sys_admins:
   - name: timeoverflow
     ssh_key: "../pub_keys/pau.pub"
     state: present
+  - name: travis
+    ssh_key: "../pub_keys/travis.pub"
+    state: present
 
 developers: []
 

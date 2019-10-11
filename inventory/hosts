@@ -14,4 +14,4 @@ staging18
 ci
 
 [ci]
-travis_ci ansible_connection=local
+ci_server ansible_host=78.46.195.94
