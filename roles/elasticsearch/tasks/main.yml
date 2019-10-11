@@ -1,0 +1,19 @@
+---
+- name: Execute vendor/elastic.elasticsearch role
+  include_role:
+    name: vendor/elastic.elasticsearch
+  vars:
+    es_instance_name: timeoverflow
+    es_heap_size: "512m"
+    es_version: 2.4.6
+    es_use_repository: false
+    es_allow_downgrades: true
+
+- name: Override ElasticSearch's Systemd unit
+  template: src=elasticsearch.j2 dest=/usr/lib/systemd/system/elasticsearch.service mode=0644 force=yes
+
+- name: Pick up systemd unit changes and restart service
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: elasticsearch
