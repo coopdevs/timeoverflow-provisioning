@@ -6,7 +6,13 @@ database_role_attributes: SUPERUSER
 development_user: "{{ lookup('env', 'USER') }}"
 
 sys_admins:
-  - name: timeoverflow
+  - name: enrico
+    ssh_key: "../pub_keys/enrico.pub"
+    state: present
+  - name: daniel
+    ssh_key: "../pub_keys/dani.pub"
+    state: present
+  - name: pau
     ssh_key: "../pub_keys/pau.pub"
     state: present
   - name: travis
