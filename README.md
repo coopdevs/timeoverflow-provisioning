@@ -75,3 +75,25 @@ ansible-playbook playbooks/provision.yml --limit=dev
 ```
 
 Add `--ask-vault-pass` to execute the command in `staging` and `production`
+
+## CI
+
+To ensure the provisioning works and no regressions are introduced we execute said playbook against a dedicated server from Travis CI.
+
+For this to work, we need to encrypt and store a new private key to while the public one needs to be uploaded to this server running from your local machine first. This is necessary for the `travis` user to log into the machine. https://blog.martignoni.net/2019/03/deploy-your-hugo-site/ is the article that served as inspiration.
+
+This new key-pair gives granular control over the provisioning from CI. If something bad happens we can create a new one.
+
+To set up you'll have to install the `travis` gem executing `bundle install` and run the following commands:
+
+```sh
+$ travis login
+$ travis encrypt-file travis --add
+$ git add travis.enc
+```
+
+Add this point the travis CLI changed the `.travis.yml` to add the steps to decrypt the `travis.enc` file. Stage those changes as well and commit.
+
+Then, you can run `ansible-playbook playbooks/sys_admins.yml --limit=ci_server -u root` from your machine to create the Travis user and upload its public key.
+
+Now it's all setup. If you push, Travis should be able to provision the CI server.
