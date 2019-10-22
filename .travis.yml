@@ -6,7 +6,7 @@ python: 3.7.4
 jobs:
   include:
     - stage: lint
-      script: ansible-lint playbooks/*.yml
+      script: ansible-lint playbooks/**/*.yml roles/**/*.yml
     - stage: lint
       script: yamllint **/*.yml
     - stage: provision
