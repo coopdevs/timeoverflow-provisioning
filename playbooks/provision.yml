@@ -26,9 +26,8 @@
         - timeoverflow
       default_gems_file: ../files/custom-gems
     - role: database
-    - role: vendor/elastic.elasticsearch
-      es_instance_name: timeoverflow
-      es_heap_size: "512m"
+    - role: elasticsearch
+      tags: es
     - role: webserver
       when: not development_environment
     - role: cacheserver
