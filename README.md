@@ -1,4 +1,4 @@
-# Playbooks
+# Playbooks [![Build Status](https://travis-ci.org/coopdevs/timeoverflow-provisioning.svg?branch=master)](https://travis-ci.org/coopdevs/timeoverflow-provisioning)
 This repository includes all the playbooks needed to prepare a server to run [TimeOverflow](https://github.com/coopdevs/timeoverflow).
 ```
 playbooks/
