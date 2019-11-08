@@ -29,7 +29,7 @@ developers:
 development_environment: false
 
 # Set super admins email addresses
-superadmins: 'admin@timeoverflow.org'
+superadmins: 'sseerrggii@gmail.org'
 
 # Let's Encrypt conf
 certificate_authority_email: "info@coopdevs.org"
