@@ -76,11 +76,24 @@ ansible-playbook playbooks/provision.yml --limit=dev
 
 Add `--ask-vault-pass` to execute the command in `staging` and `production`
 
-## CI
+## CI/CD Pipeline
+
+Our pipeline is design as follows
+
+               +------------+
+               |Lint        |
+               +------------+ master +-------------------+
+                              +----> | Staging Provision |
+               +------------+ merge  +-------------------+
+               |CI Provision|
+               +------------+
+
+
+### CI Provision
 
 To ensure the provisioning works and no regressions are introduced we execute said playbook against a dedicated server from Travis CI.
 
-For this to work, we need to encrypt and store a new private key to while the public one needs to be uploaded to this server running from your local machine first. This is necessary for the `travis` user to log into the machine. https://blog.martignoni.net/2019/03/deploy-your-hugo-site/ is the article that served as inspiration.
+For this to work, we need to encrypt and store a new private key in Travis while the public one needs to be uploaded to this server running from your local machine first. This is necessary for the `travis` user to log into the machine. https://blog.martignoni.net/2019/03/deploy-your-hugo-site/ is the article that served as inspiration.
 
 This new key-pair gives granular control over the provisioning from CI. If something bad happens we can create a new one.
 
@@ -97,3 +110,7 @@ Add this point the travis CLI changed the `.travis.yml` to add the steps to decr
 Then, you can run `ansible-playbook playbooks/sys_admins.yml --limit=ci_server -u root` from your machine to create the Travis user and upload its public key.
 
 Now it's all setup. If you push, Travis should be able to provision the CI server.
+
+## Staging Provision
+
+We also configured our pipeline to provision staging when merging into master.  This way we skip the manual step and staging will always be in sync with master so we can test things in a production-like environment.

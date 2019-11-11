@@ -11,11 +11,23 @@ jobs:
       script: yamllint **/*.yml
     - stage: provision
       script:
-        - openssl aes-256-cbc -K $encrypted_8208c68d3911_key -iv $encrypted_8208c68d3911_iv
-          -in travis.enc -out travis -d
         - eval "$(ssh-agent -s)"
         - chmod 600 travis
         - ssh-add travis
         - ansible-galaxy install -r requirements.yml
         - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbooks/sys_admins.yml --limit=ci_server
         - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbooks/provision.yml --limit=ci_server
+    - stage: provision_staging
+      script:
+        - eval "$(ssh-agent -s)"
+        - chmod 600 travis
+        - ssh-add travis
+        - ansible-galaxy install -r requirements.yml
+        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbooks/sys_admins.yml --limit=staging --vault-password-file vault_pass
+        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbooks/provision.yml --limit=staging --vault-password-file vault_pass
+stages:
+  - name: provision_staging
+    if: type = push AND branch = master
+before_install:
+  - openssl aes-256-cbc -K $encrypted_8208c68d3911_key -iv $encrypted_8208c68d3911_iv -in encrypted_files.tar.enc -out encrypted_files.tar -d
+  - tar xvf encrypted_files.tar
