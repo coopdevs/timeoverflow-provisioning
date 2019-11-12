@@ -78,7 +78,7 @@ Add `--ask-vault-pass` to execute the command in `staging` and `production`
 
 ## CI/CD Pipeline
 
-Our pipeline is design as follows
+Our pipeline is designed as follows
 
                +------------+
                |Lint        |
