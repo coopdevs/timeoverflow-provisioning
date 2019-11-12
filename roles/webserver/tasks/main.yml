@@ -13,7 +13,7 @@
     minute: 0
     state: present
     job: >
-      /bin/bash -l -c 'cd /var/www/timeoverflow/current && bin/rails runner -e production '\''OrganizationNotifierService.new(Organization.all).send_recent_posts_to_online_members'\'' >> log/cron_log.log 2>&1' # noqa 204
+      /bin/bash -l -c 'cd /var/www/timeoverflow/current && bin/rails runner '\''OrganizationNotifierService.new(Organization.all).send_recent_posts_to_online_members'\'' >> log/cron_log.log 2>&1' # noqa 204
 
 - include_role:
     name: vendor/coopdevs.certbot_nginx
