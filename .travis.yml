@@ -9,7 +9,7 @@ jobs:
       script: ansible-lint playbooks/*.yml
     - stage: lint
       script: yamllint **/*.yml
-    - stage: provision
+    - stage: provision_ci
       script:
         - eval "$(ssh-agent -s)"
         - chmod 600 travis
@@ -26,6 +26,8 @@ jobs:
         - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbooks/sys_admins.yml --limit=staging --vault-password-file vault_pass
         - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbooks/provision.yml --limit=staging --vault-password-file vault_pass
 stages:
+  - name: provision_ci
+    if: branch != master
   - name: provision_staging
     if: type = push AND branch = master
 before_install:
