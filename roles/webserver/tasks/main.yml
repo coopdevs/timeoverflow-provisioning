@@ -31,3 +31,6 @@
       timeoverflow:
         template: timeoverflow.conf.j2
         server_name: "{{ inventory_hostname }}"
+      timeoverflow_http:
+        template: timeoverflow_http.conf.j2
+        server_name: "{{ inventory_hostname }}"

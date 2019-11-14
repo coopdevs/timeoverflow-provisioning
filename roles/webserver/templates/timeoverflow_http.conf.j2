@@ -1,0 +1,6 @@
+# {{ ansible_managed }}
+server {
+    listen 80;
+    server_name {{ item.value.server_name }};
+    return 301 https://$server_name$request_uri;
+}
