@@ -8,6 +8,8 @@
     es_version: 2.4.6
     es_use_repository: false
     es_allow_downgrades: true
+    es_restart_on_change: false
+    es_start_service: false
 
 - name: Override ElasticSearch's Systemd unit
   template: src=elasticsearch.j2 dest={{ instance_sysd_script }} mode=0644 force=yes
