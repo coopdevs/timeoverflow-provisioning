@@ -1,0 +1,4 @@
+---
+# Database migration settings
+source_db: timeoverflow_production
+ansible_python_interpreter: /usr/bin/python
