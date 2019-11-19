@@ -38,4 +38,4 @@ superadmins: 'admin@timeoverflow.org'
 certificate_authority_email: "info@coopdevs.org"
 
 # Enable backups
-backups_role_enabled: true
+backups_role_enabled: false
