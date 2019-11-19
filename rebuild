@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -ex
+
+echo 'Rebuilding with ubuntu-18.04'
+
+hcloud server rebuild --image ubuntu-18.04 CI
+
+ssh-keygen -f "/home/pau/.ssh/known_hosts" -R "78.46.195.94"
+ssh -q root@78.46.195.94 exit 0
+
+pyenv exec ansible-playbook playbooks/sys_admins.yml --limit=ci_server -u root
