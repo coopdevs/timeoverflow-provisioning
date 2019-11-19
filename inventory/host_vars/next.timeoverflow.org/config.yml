@@ -1,6 +1,6 @@
 ---
-database_name: timeoverflow_staging
-rails_environment: staging
+database_name: timeoverflow_production
+rails_environment: production
 database_role_attributes: NOSUPERUSER
 
 sys_admins:
@@ -12,6 +12,9 @@ sys_admins:
     state: present
   - name: pau
     ssh_key: "../pub_keys/pau.pub"
+    state: present
+  - name: travis
+    ssh_key: "../pub_keys/travis.pub"
     state: present
 
 developers:
