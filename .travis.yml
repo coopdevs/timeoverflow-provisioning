@@ -42,8 +42,8 @@ jobs:
         - chmod 600 travis
         - ssh-add travis
         - ansible-galaxy install -r requirements.yml
-        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbooks/sys_admins.yml --limit=production --vault-password-file=vault_pass
-        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbooks/provision.yml --limit=production --vault-password-file=vault_pass
+        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbooks/sys_admins.yml --limit=next --vault-password-file=vault_pass
+        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbooks/provision.yml --limit=next --vault-password-file=vault_pass
 stages:
   - name: provision_ci
     if: branch != master
