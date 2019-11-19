@@ -1,0 +1,47 @@
+# This requires you to run the playbooks/backup.yml first. Check that playbook
+# and the README for more details.
+#
+# Usage:
+#
+#   $ pyenv exec ansible-playbook playbooks/restore.yml
+#       --limit <target_server>
+#       -e "backup_file=timeoverflow_staging-2019-11-18-15:37:15.sql.gz"
+#       --vault-password-file=.vault_pass
+---
+- hosts: timeoverflow
+  vars:
+    filename: "/tmp/{{ backup_file }}"
+    target_db: "{{ database_name }}"
+  tasks:
+    - name: Copy dump to remote server
+      become: yes
+      copy:
+        src: "{{ backup_file }}"
+        dest: "/tmp/{{ backup_file }}"
+        owner: timeoverflow
+        group: timeoverflow
+        mode: '0644'
+
+    - name: Create db
+      become: yes
+      become_user: postgres
+      postgresql_db:
+        name: "{{ target_db }}"
+        owner: "{{ database_user }}"
+        lc_collate: 'es_ES.UTF-8'
+        lc_ctype: 'es_ES.UTF-8'
+        encoding: 'UTF-8'
+        template: 'template0'
+
+    - name: Restore database
+      become: yes
+      become_user: postgres
+      postgresql_db:
+        name: "{{ target_db }}"
+        owner: "{{ database_user }}"
+        lc_collate: 'es_ES.UTF-8'
+        lc_ctype: 'es_ES.UTF-8'
+        encoding: 'UTF-8'
+        template: 'template0'
+        target: "{{ filename }}"
+        state: restore

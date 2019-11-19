@@ -1,0 +1,3 @@
+---
+# Database migration settings
+source_db: "{{ database_name }}"

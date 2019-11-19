@@ -114,3 +114,23 @@ Now it's all setup. If you push, Travis should be able to provision the CI serve
 ## Staging Provision
 
 We also configured our pipeline to provision staging when merging into master.  This way we skip the manual step and staging will always be in sync with master so we can test things in a production-like environment.
+
+## Database migration
+
+We added support for migrating the database to a new production server by means of a dump and a restore. It's implemented in two different playbooks, backup.yml and restore.yml.
+
+First, run the following command against the server you want to migrate from:
+
+```
+$ pyenv exec ansible-playbook playbooks/backup.yml --limit <source_server> --vault-password-file=.vault_pass
+```
+
+This will store the backup file as something like `playbooks/files/timeoverflow_staging-2019-11-18-15:43:01.dump` in your machine. Then, run the following to restore in another server:
+
+```
+$ pyenv exec ansible-playbook playbooks/restore.yml --limit <target_server> -e "backup_file=timeoverflow_staging-2019-11-18-15:37:15.sql.gz" --vault-password-file=.vault_pass
+```
+
+Note the `backup_file` you specify must be the basename of the file that the `playbooks/backup.yml` downloaded to your `playbooks/files/` directory. Keep in mind you won't see it if you `git status` since it's ignored by Git.
+
+To migrate the old production database you'll have to specify `source_server` as `old_production`, while `target_server` can be `staging` to test things first and the new production host when ready.

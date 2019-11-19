@@ -1,0 +1,32 @@
+# Creates and downloads a database dump from the server you specify with
+# --limit. You can then restore it using playbooks/restore.yml. Check out the
+# README for more details.
+#
+# Usage:
+#
+#   $ pyenv exec ansible-playbook playbooks/backup.yml
+#     --limit <source_server>
+#     --vault-password-file=.vault_pass
+---
+- hosts: timeoverflow
+  vars:
+    basename: "{{ source_db }}-{{ now }}.dump"
+    filename: "/tmp/{{ basename }}"
+
+  tasks:
+    - name: store current timestamp
+      set_fact:
+        now: "{{ lookup('pipe', 'date +%F-%T') }}"
+
+    - name: Dump database to a file
+      postgresql_db:
+        login_user: timeoverflow
+        name: "{{ source_db }}"
+        state: dump
+        target: "{{ filename }}"
+
+    - name: Copy dump to control host
+      fetch:
+        src: "{{ filename }}"
+        dest: "files/{{ basename }}"
+        flat: yes
