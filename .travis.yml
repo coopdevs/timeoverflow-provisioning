@@ -34,7 +34,7 @@ jobs:
         - ansible-galaxy install -r requirements.yml
         - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbooks/sys_admins.yml --limit=staging --vault-password-file=vault_pass
         - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbooks/provision.yml --limit=staging --vault-password-file=vault_pass
-    - stage: provision_production
+    - stage: provision_next
       script:
         - openssl aes-256-cbc -K $encrypted_8208c68d3911_key -iv $encrypted_8208c68d3911_iv -in encrypted_files.tar.enc -out encrypted_files.tar -d
         - tar xvf encrypted_files.tar
@@ -49,5 +49,5 @@ stages:
     if: branch != master
   - name: provision_staging
     if: type = push AND branch = master
-  - name: provision_production
+  - name: provision_next
     if: type = push AND branch = master
