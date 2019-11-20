@@ -82,9 +82,9 @@ Our pipeline is designed as follows
 
             +------------+
             |Lint        |
-            +------------+ master +-------------------+        +----------------------+
-                           +----> | Staging Provision | +----> | Production Provision |
-            +------------+ merge  +-------------------+        +----------------------+
+            +------------+ master +-------------------+        +----------------+
+                           +----> | Staging Provision | +----> | Next Provision |
+            +------------+ merge  +-------------------+        +----------------+
             |CI Provision|
             +------------+
 
@@ -115,9 +115,9 @@ Now it's all setup. If you push, Travis should be able to provision the CI serve
 
 We also configured our pipeline to provision staging when merging into master. This way we skip the manual step and staging will always be in sync with master so we can test things in a production-like environment.
 
-## Production Provision
+## Next Provision
 
-Now that we're setting up a new production server and rapid and reliable iteration are much needed. This ensures that with every approved PR the `next.timeoverflow.org` server is kept on the latest state and in case of failure we quickly solve it.
+Now that we're setting up a new production server rapid and reliable iteration are much needed. This ensures that with every approved PR the `next.timeoverflow.org` server is kept on the latest state and in case of failure we quickly solve it.
 
 Once fully set up and the server is ready to take on we'll reconsider it.
 
