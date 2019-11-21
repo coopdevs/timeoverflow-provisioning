@@ -32,7 +32,7 @@ developers:
 development_environment: false
 
 # Set super admins email addresses
-superadmins: 'sseerrggii@gmail.org'
+superadmins: 'sseerrggii@gmail.com'
 
 # Let's Encrypt conf
 certificate_authority_email: "info@coopdevs.org"
