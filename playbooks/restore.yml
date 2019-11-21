@@ -22,7 +22,27 @@
         group: timeoverflow
         mode: '0644'
 
-    - name: Create db
+    - name: Stop app server to kill database connections
+      become: yes
+      become_user: root
+      service:
+        name: timeoverflow
+        state: stopped
+
+    - pause: # noqa 502
+        prompt: "\n   => ⚡ Warning, harmful action ahead. Are you sure you want to drop the target database `{{ database_name }}`? (yes/no)"
+      register: drop_confirmation
+      delegate_to: localhost
+
+    - name: Drop target database
+      become: yes
+      become_user: postgres
+      postgresql_db:
+        name: "{{ target_db }}"
+        state: absent
+      when: drop_confirmation.user_input | bool
+
+    - name: Create target database
       become: yes
       become_user: postgres
       postgresql_db:
@@ -33,7 +53,7 @@
         encoding: 'UTF-8'
         template: 'template0'
 
-    - name: Restore database
+    - name: Restore database backup
       become: yes
       become_user: postgres
       postgresql_db:
@@ -45,3 +65,10 @@
         template: 'template0'
         target: "{{ filename }}"
         state: restore
+
+    - name: Start app server
+      become: yes
+      become_user: root
+      service:
+        name: timeoverflow
+        state: started
