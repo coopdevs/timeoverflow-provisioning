@@ -9,4 +9,4 @@ app_path: "/var/www/timeoverflow"
 backups_role_postgresql_enabled: true
 backups_role_sudoers_enabled: true
 backups_role_db_names: ["{{ database_name }}"]
-backups_role_assets_paths: "{{ app_path }}"
+backups_role_assets_paths: ["{{ app_path }}"]
