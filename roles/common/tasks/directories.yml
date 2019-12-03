@@ -1,15 +1,7 @@
 ---
-- name: "Create /var/www directory"
+- name: "Create {{ app_path }} directory"
   file:
-    path: "/var/www"
-    owner: root
-    group: root
-    mode: 0755
-    state: directory
-
-- name: "Create /var/www/timeoverflow directory"
-  file:
-    path: "/var/www/timeoverflow"
+    path: "{{ app_path }}"
     owner: timeoverflow
     group: timeoverflow
     mode: 02775
