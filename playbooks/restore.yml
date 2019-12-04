@@ -29,6 +29,13 @@
         name: timeoverflow
         state: stopped
 
+    - name: Stop background job workers to kill database connections
+      become: yes
+      become_user: root
+      service:
+        name: sidekiq
+        state: stopped
+
     - pause: # noqa 502
         prompt: "\n   => ⚡ Warning, harmful action ahead. Are you sure you want to drop the target database `{{ database_name }}`? (yes/no)"
       register: drop_confirmation
@@ -71,4 +78,11 @@
       become_user: root
       service:
         name: timeoverflow
+        state: started
+
+    - name: Start background job workers
+      become: yes
+      become_user: root
+      service:
+        name: sidekiq
         state: started
