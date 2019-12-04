@@ -17,12 +17,12 @@
 
 - include_role:
     name: vendor/coopdevs.certbot_nginx
-  vars:
-    letsencrypt_email: "{{ certificate_authority_email }}"
 
 - include_role:
     name: vendor/coopdevs.certbot_nginx
     tasks_from: certificate.yml
+  vars:
+    letsencrypt_email: "{{ certificate_authority_email }}"
   with_items: "{{ certificate_domain_names }}"
   loop_control:
     loop_var: domain_name
