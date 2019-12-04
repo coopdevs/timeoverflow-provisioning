@@ -8,7 +8,7 @@ After=syslog.target network.target redis_6379.service
 
 [Service]
 Type=simple
-WorkingDirectory=/var/www/timeoverflow/current
+WorkingDirectory={{ current_path }}
 EnvironmentFile=-/etc/default/timeoverflow
 ExecStart=/home/timeoverflow/.rbenv/bin/rbenv exec bundle exec sidekiq -e {{ rails_environment }}
 User=timeoverflow
