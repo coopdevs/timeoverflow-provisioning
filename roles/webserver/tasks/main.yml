@@ -18,8 +18,14 @@
 - include_role:
     name: vendor/coopdevs.certbot_nginx
   vars:
-    domain_name: "{{ inventory_hostname }}"
     letsencrypt_email: "{{ certificate_authority_email }}"
+
+- include_role:
+    name: vendor/coopdevs.certbot_nginx
+    tasks_from: certificate.yml
+  with_items: "{{ certificate_domain_names }}"
+  loop_control:
+    loop_var: domain_name
 
 - include_role:
     name: vendor/jdauphant.nginx
