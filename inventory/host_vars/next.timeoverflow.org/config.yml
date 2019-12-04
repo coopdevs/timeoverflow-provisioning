@@ -36,6 +36,9 @@ superadmins: 'sseerrggii@gmail.com'
 
 # Let's Encrypt conf
 certificate_authority_email: "info@coopdevs.org"
+certificate_domain_names:
+  - "{{ inventory_hostname }}"
+  - "www.timeoverflow.org"
 
 # Enable backups
 backups_role_enabled: true
