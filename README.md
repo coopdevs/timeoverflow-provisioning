@@ -130,7 +130,7 @@ We added support for migrating the database to a new production server by means 
 First, run the following command against the server you want to migrate from:
 
 ```
-$ pyenv exec ansible-playbook playbooks/backup.yml --limit <source_server> --vault-password-file=.vault_pass
+$ pyenv exec ansible-playbook playbooks/backup.yml --user timeoverflow --limit <source_server> --vault-password-file=.vault_pass
 ```
 
 This will store the backup file as something like `playbooks/files/timeoverflow_staging-2019-11-18-15:43:01.dump` in your machine. Then, run the following to restore in another server:
