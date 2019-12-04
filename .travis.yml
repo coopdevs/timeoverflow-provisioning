@@ -36,14 +36,7 @@ jobs:
         - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbooks/provision.yml --limit=staging --vault-password-file=vault_pass
     - stage: provision_production
       script:
-        - openssl aes-256-cbc -K $encrypted_8208c68d3911_key -iv $encrypted_8208c68d3911_iv -in encrypted_files.tar.enc -out encrypted_files.tar -d
-        - tar xvf encrypted_files.tar
-        - eval "$(ssh-agent -s)"
-        - chmod 600 travis
-        - ssh-add travis
-        - ansible-galaxy install -r requirements.yml
-        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbooks/sys_admins.yml --limit=next --vault-password-file=vault_pass
-        - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook playbooks/provision.yml --limit=next --vault-password-file=vault_pass
+        - echo "Release $tag"
 stages:
   - name: provision_ci
     if: branch != master
