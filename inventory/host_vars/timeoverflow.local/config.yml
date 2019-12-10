@@ -22,3 +22,7 @@ development_environment: true
 superadmins: 'admin@timeoverflow.org'
 
 backups_role_enabled: false
+
+smtp_username: ''
+smtp_password: ''
+rollbar_access_token: ''
