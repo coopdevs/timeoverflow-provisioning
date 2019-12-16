@@ -32,6 +32,7 @@
     nginx_sites:
       timeoverflow:
         template: timeoverflow.conf.j2
+        ssl_cert_filename: "{{ certbot_cert_name }}"
         server_name: "{{ certificate_domain_names | default([inventory_hostname]) | join(' ') }}"
       timeoverflow_http:
         template: timeoverflow_http.conf.j2
