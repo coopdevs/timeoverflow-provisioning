@@ -33,10 +33,3 @@
     nginx_configs:
       upstream:
         - upstream app_server { server localhost:8080 fail_timeout=0; }
-    nginx_sites:
-      timeoverflow:
-        template: timeoverflow.conf.j2
-        server_name: "{{ inventory_hostname }}"
-      timeoverflow_http:
-        template: timeoverflow_http.conf.j2
-        server_name: "{{ inventory_hostname }}"
