@@ -12,3 +12,11 @@ backups_role_postgresql_enabled: true
 backups_role_sudoers_enabled: true
 backups_role_db_names: ["{{ database_name }}"]
 backups_role_assets_paths: ["{{ app_path }}"]
+
+nginx_sites:
+  timeoverflow:
+    template: timeoverflow.conf.j2
+    server_name: "{{ inventory_hostname }}"
+  timeoverflow_http:
+    template: timeoverflow_http.conf.j2
+    server_name: "{{ inventory_hostname }}"
