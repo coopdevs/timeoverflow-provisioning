@@ -36,6 +36,7 @@ superadmins: 'sseerrggii@gmail.com'
 
 # Let's Encrypt conf
 certificate_authority_email: "info@coopdevs.org"
+certbot_cert_name: www.timeoverflow.org
 certificate_domain_names:
   - "{{ inventory_hostname }}"
   - "www.timeoverflow.org"

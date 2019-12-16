@@ -17,15 +17,11 @@
 
 - include_role:
     name: vendor/coopdevs.certbot_nginx
-
-- include_role:
-    name: vendor/coopdevs.certbot_nginx
-    tasks_from: certificate.yml
   vars:
+    domain_name: "{{ certificate_domain_names | default([inventory_hostname]) | join(',') }}"
     letsencrypt_email: "{{ certificate_authority_email }}"
-  with_items: "{{ certificate_domain_names }}"
-  loop_control:
-    loop_var: domain_name
+    certbot_nginx_cert_name: "{{ certbot_cert_name | default(inventory_hostname) }}"
+    certbot_force_update: true
 
 - include_role:
     name: vendor/jdauphant.nginx
@@ -36,7 +32,7 @@
     nginx_sites:
       timeoverflow:
         template: timeoverflow.conf.j2
-        server_name: "{{ inventory_hostname }}"
+        server_name: "{{ certificate_domain_names | default([inventory_hostname]) | join(' ') }}"
       timeoverflow_http:
         template: timeoverflow_http.conf.j2
-        server_name: "{{ inventory_hostname }}"
+        server_name: "{{ certificate_domain_names | default([inventory_hostname]) | join(' ') }}"

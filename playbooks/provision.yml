@@ -30,6 +30,7 @@
       tags: es
     - role: webserver
       when: not development_environment
+      tags: webserver
     - role: cacheserver
     - role: geerlingguy.redis
     - role: background_jobs
