@@ -4,9 +4,6 @@ timeoverflow.local
 [staging]
 staging.timeoverflow.org ansible_host=116.203.113.233
 
-[next]
-next.timeoverflow.org ansible_host=78.47.225.84
-
 [production]
 timeoverflow.org ansible_host=78.47.225.84
 
@@ -19,7 +16,6 @@ ci_server ansible_host=78.46.195.94
 [timeoverflow:children]
 dev
 staging
-next
 ci
 old_production
 production
