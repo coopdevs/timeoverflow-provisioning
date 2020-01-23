@@ -4,7 +4,7 @@ Description=Timeoverflow unicorn server
 [Service]
 Type=simple
 SyslogIdentifier=timeoverflow-unicorn
-User=timeoverflow
+User={{ app_user }}
 PIDFile={{ app_path }}/shared/tmp/pids/unicorn.pid
 WorkingDirectory={{ current_path }}
 EnvironmentFile=-/etc/default/timeoverflow
