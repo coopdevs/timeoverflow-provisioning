@@ -7,7 +7,7 @@ database_user: timeoverflow
 app_path: "/var/www/timeoverflow"
 current_path: "{{ app_path }}/current"
 app_user: "timeoverflow"
-environment_file: "-etc/default/timeoverflow"
+environment_file: "etc/default/timeoverflow"
 
 # Backups vars
 backups_role_postgresql_enabled: true
