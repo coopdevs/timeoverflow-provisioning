@@ -15,6 +15,11 @@
     job: >
       "/bin/bash -l -c 'cd {{ current_path }} && bin/rails runner '\''OrganizationNotifierService.new(Organization.all).send_recent_posts_to_online_members'\'' >> log/cron_log.log 2>&1'" # noqa 204
 
+- name: Remove old timeoverflow.conf nginx site
+  file:
+    state: absent
+    path: /etc/nginx/sites-enabled/timeoverflow.conf
+
 - include_role:
     name: vendor/coopdevs.certbot_nginx
 
