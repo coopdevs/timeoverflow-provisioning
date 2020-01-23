@@ -11,7 +11,7 @@ Type=simple
 WorkingDirectory={{ current_path }}
 EnvironmentFile=-/etc/default/timeoverflow
 ExecStart=/home/timeoverflow/.rbenv/bin/rbenv exec bundle exec sidekiq -e {{ rails_environment }}
-User=timeoverflow
+User={{ app_user }}
 Group=timeoverflow
 UMask=0002
 
