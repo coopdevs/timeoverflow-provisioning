@@ -7,7 +7,7 @@ SyslogIdentifier=timeoverflow-unicorn
 User={{ app_user }}
 PIDFile={{ app_path }}/shared/tmp/pids/unicorn.pid
 WorkingDirectory={{ current_path }}
-EnvironmentFile=-/etc/default/timeoverflow
+EnvironmentFile={{ environment_file }}
 
 ExecStart=/home/timeoverflow/.rbenv/bin/rbenv exec bundle exec {{ current_path }}/bin/unicorn_rails -c {{ current_path }}/config/unicorn.rb
 ExecReload=/bin/kill -s USR2 $MAINPID
