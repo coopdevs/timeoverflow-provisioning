@@ -7,7 +7,7 @@
 - name: Create crontab entries for scheduled job
   cron:
     name: send_recent_posts_to_online_members
-    user: {{ app_user }}
+    user: "{{ app_user }}"
     weekday: 1
     hour: 9
     minute: 0
