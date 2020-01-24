@@ -1,5 +1,7 @@
 ---
 database_name: timeoverflow_development
+database_password: OZM+Ey389Rk=
+
 rails_environment: development
 database_role_attributes: SUPERUSER
 
@@ -26,3 +28,6 @@ backups_role_enabled: false
 smtp_username: ''
 smtp_password: ''
 rollbar_access_token: ''
+
+mailer_sender: info@timeoverflow.org
+secret_token: 9JlwmB955Q24nH6mLhVlHDCy/7ju/rPgTXAn8TgPDoQyPOyLWmNqR5758lh/DUVDBPcOnpJ$
