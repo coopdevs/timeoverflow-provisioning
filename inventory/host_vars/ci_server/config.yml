@@ -30,7 +30,6 @@ superadmins: 'admin@timeoverflow.org'
 
 backups_role_enabled: false
 
-# Secrets
 mailer_sender: info@timeoverflow.org
 secret_token: 9JlwmB955Q24nH6mLhVlHDCy/7ju/rPgTXAn8TgPDoQyPOyLWmNqR5758lh/DUVDBPcOnpJlkYwFbXxvHr2hBBjsLhivNSX79uwG44cDIhfJBoQSYP5jlsmBWVrAF/oH+1d/0EArVjlTU6bdynhO4bbIlPIdPzABycsLI43wUj8=
 smtp_username: ''
