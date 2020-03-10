@@ -13,7 +13,6 @@
           - nginx
           - certbot
           - python-certbot-nginx
-          - memcached
     - role: common
     - role: vendor/zzet.rbenv
       rbenv:
