@@ -3,5 +3,5 @@
   apt:
     name: memcached
     state: absent
-    purge=yes
-    force=yes
+    purge: yes
+    force: yes
