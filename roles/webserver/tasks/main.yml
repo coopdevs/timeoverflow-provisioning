@@ -22,16 +22,6 @@
   loop_control:
     loop_var: domain_name
 
-- name: Remove old timeoverflow.conf nginx site
-  file:
-    state: absent
-    path: /etc/nginx/sites-enabled/timeoverflow.conf
-
-- name: Remove old next.timeoverflow.conf nginx site
-  file:
-    state: absent
-    path: /etc/nginx/sites-enabled/next.timeoverflow.org
-
 - include_role:
     name: vendor/jdauphant.nginx
   vars:
