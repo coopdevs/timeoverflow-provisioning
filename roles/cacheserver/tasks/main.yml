@@ -2,10 +2,6 @@
 - name: Install memcached
   apt:
     name: memcached
-    state: present
-
-- name: Start memcached service
-  service:
-    name: memcached
-    enabled: yes
-    state: started
+    state: absent
+    purge: yes
+    force: yes
