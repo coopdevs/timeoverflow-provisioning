@@ -15,7 +15,7 @@ sys_admins:
     state: present
   - name: ferran
     ssh_key: "../pub_keys/ferran.pub"
-    state: present
+    state: absent
   - name: travis
     ssh_key: "../pub_keys/travis.pub"
     state: present
