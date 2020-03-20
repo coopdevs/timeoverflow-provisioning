@@ -1,7 +1,0 @@
----
-- name: Install memcached
-  apt:
-    name: memcached
-    state: absent
-    purge: yes
-    force: yes
