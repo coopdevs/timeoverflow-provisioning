@@ -30,7 +30,6 @@
     - role: webserver
       when: not development_environment
       tags: webserver
-    - role: cacheserver
     - role: geerlingguy.redis
     - role: background_jobs
     - role: coopdevs.backups_role
