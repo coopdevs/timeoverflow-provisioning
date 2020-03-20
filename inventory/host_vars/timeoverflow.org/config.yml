@@ -18,7 +18,7 @@ sys_admins:
     ssh_key: "../pub_keys/travis.pub"
     state: present
   - name: marisa
-    ssh_key: "../pub_keys/travis.pub"
+    ssh_key: "../pub_keys/marisa.pub"
     state: present
 
 developers:
