@@ -10,6 +10,7 @@ cache:
 
 jobs:
   include:
+  #linters 
     - stage: lint
       script: ansible-lint playbooks/*.yml
       script: yamllint **/*.yml
