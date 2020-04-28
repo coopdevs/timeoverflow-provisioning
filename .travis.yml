@@ -12,7 +12,6 @@ jobs:
   include:
     - stage: lint
       script: ansible-lint playbooks/*.yml
-    - stage: lint
       script: yamllint **/*.yml
     - stage: provision_ci
       script:
