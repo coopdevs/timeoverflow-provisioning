@@ -12,7 +12,7 @@ jobs:
   include:
     - stage: lint
       script: ansible-lint playbooks/*.yml
-    - stage: lint
+    -
       script: yamllint **/*.yml
     - stage: provision_ci
       script:
@@ -38,6 +38,7 @@ jobs:
       script:
         - echo "Release $tag"
 stages:
+  - lint
   - name: provision_ci
     if: branch != master
   - name: provision_staging
