@@ -18,7 +18,7 @@ sys_admins:
     state: present
   - name: marisa
     ssh_key: "../pub_keys/marisa.pub"
-    state: present
+    state: absent
 
 developers:
   - name: sergi
