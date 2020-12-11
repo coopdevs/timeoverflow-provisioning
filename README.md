@@ -8,7 +8,7 @@ playbooks/
 
 ## Requirements
 
-* Python 3.7.4
+* Python 3.8.3
 * Pip 19.2.3
 * Ansible 2.8
 
@@ -18,8 +18,8 @@ Now, execute the following commands:
 
 ```
 $ cd timeoverflow-provisioning
-$ pyenv install 3.7.4
-$ pyenv virtualenv 3.7.4 timeoverflow
+$ pyenv install 3.8.3
+$ pyenv virtualenv 3.8.3 timeoverflow
 $ pyenv exec pip install -r requirements.txt
 ```
 
