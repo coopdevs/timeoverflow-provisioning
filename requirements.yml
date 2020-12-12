@@ -13,4 +13,4 @@
 - src: geerlingguy.redis
   version: 1.6.0
 - src: coopdevs.backups_role
-  version: v1.2.4
+  version: v1.2.6
