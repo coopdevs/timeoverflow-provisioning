@@ -34,3 +34,4 @@
     - role: background_jobs
     - role: coopdevs.backups_role
       when: backups_role_enabled
+      tags: backups
