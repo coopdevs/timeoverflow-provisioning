@@ -59,3 +59,10 @@
   postgresql_ext:
     name: hstore
     db: "{{ database_name }}"
+
+- name: Add unaccent extension to the database
+  become: yes
+  become_user: postgres
+  postgresql_ext:
+    name: unaccent
+    db: "{{ database_name }}"
