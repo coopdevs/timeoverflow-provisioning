@@ -3,6 +3,12 @@
   template:
     src: unicorn_service.j2
     dest: /etc/systemd/system/timeoverflow.service
+  register: timeoverflow_unit
+
+- name: Reload systemd
+  systemd:
+    daemon_reload: yes
+  when: timeoverflow_unit.changed
 
 - name: Create crontab entries for scheduled job
   cron:
