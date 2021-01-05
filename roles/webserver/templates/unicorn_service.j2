@@ -9,7 +9,7 @@ PIDFile={{ app_path }}/shared/tmp/pids/unicorn.pid
 WorkingDirectory={{ current_path }}
 EnvironmentFile={{ environment_file }}
 
-ExecStart=/home/timeoverflow/.rbenv/bin/rbenv exec bundle exec {{ current_path }}/bin/unicorn_rails -c {{ current_path }}/config/unicorn.rb
+ExecStart=/home/timeoverflow/.rbenv/bin/rbenv exec bundle exec unicorn -c config/unicorn.rb
 ExecReload=/bin/kill -s USR2 $MAINPID
 ExecStop=/bin/kill -s QUIT $MAINPID
 
