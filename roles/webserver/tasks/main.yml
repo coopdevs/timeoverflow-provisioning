@@ -5,7 +5,7 @@
     dest: /etc/systemd/system/timeoverflow.service
   register: timeoverflow_unit
 
-- name: Reload systemd
+- name: Reload systemd # noqa 503
   systemd:
     daemon_reload: yes
   when: timeoverflow_unit.changed
