@@ -32,3 +32,4 @@ rbenv_plugins:
   - { name: "rbenv-update",       repo: "https://github.com/rkh/rbenv-update.git",         version: "master" }
   - { name: "rbenv-whatis",       repo: "https://github.com/rkh/rbenv-whatis.git",         version: "master" }
   - { name: "rbenv-use",          repo: "https://github.com/rkh/rbenv-use.git",            version: "master" }
+  
