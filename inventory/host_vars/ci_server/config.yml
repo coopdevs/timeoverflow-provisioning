@@ -35,3 +35,8 @@ secret_token: 9JlwmB955Q24nH6mLhVlHDCy/7ju/rPgTXAn8TgPDoQyPOyLWmNqR5758lh/DUVDBP
 smtp_username: ''
 smtp_password: ''
 rollbar_access_token: ''
+
+aws_access_key_id: ''
+aws_secret_access_key: ''
+aws_bucket: ''
+aws_region: ''
