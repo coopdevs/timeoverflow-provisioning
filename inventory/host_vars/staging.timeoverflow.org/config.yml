@@ -16,9 +16,6 @@ sys_admins:
   - name: travis
     ssh_key: "../pub_keys/travis.pub"
     state: present
-  - name: marisa
-    ssh_key: "../pub_keys/marisa.pub"
-    state: absent
   - name: kon
     ssh_key: "../pub_keys/kon.pub"
     state: present
