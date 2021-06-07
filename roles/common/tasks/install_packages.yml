@@ -22,3 +22,7 @@
     name: chromium-chromedriver
     state: present
   when: rails_environment == "development"
+
+- name: Install ImageMagick
+  apt:
+    name: imagemagick
