@@ -156,3 +156,5 @@ aws_secret_access_key: !vault |
           3830316536656631336535646133326463646436656366323363
 aws_bucket: timeoverflow-staging
 aws_region: eu-west-3
+
+nginx_max_body_size: 5M
