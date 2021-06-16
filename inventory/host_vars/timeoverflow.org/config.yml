@@ -178,3 +178,5 @@ aws_secret_access_key: !vault |
 aws_bucket: timeoverflow-production
 
 aws_region: eu-west-3
+
+nginx_max_body_size: 5M

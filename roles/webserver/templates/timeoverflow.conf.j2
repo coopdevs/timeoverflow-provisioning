@@ -8,6 +8,7 @@ server {
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
     server_name {{ item.value.server_name }};
+    client_max_body_size {{ nginx_max_body_size | default('1M', true) }};
 
     location / {
         proxy_set_header  Host                $host;
