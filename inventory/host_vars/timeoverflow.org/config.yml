@@ -179,4 +179,4 @@ aws_bucket: timeoverflow-production
 
 aws_region: eu-west-3
 
-nginx_max_body_size: 5M
+nginx_max_body_size: 15M
