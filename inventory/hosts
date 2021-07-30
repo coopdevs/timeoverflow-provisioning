@@ -14,5 +14,4 @@ ci_server ansible_host=78.46.195.94
 dev
 staging
 ci
-old_production
 production
