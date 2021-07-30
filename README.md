@@ -133,7 +133,7 @@ $ pyenv exec ansible-playbook playbooks/restore.yml --limit <target_server> -e "
 
 Note the `backup_file` you specify must be the basename of the file that the `playbooks/backup.yml` downloaded to your `playbooks/files/` directory. Keep in mind you won't see it if you `git status` since it's ignored by Git.
 
-To migrate the old production database you'll have to specify `source_server` as `old_production`, while `target_server` can be `staging` to test things first and the new production host when ready. Remember to run the restore playbook with a sysadmin user with root privileges because it needs to become the app user in many tasks.
+To migrate specify `target_server` can be `staging` to test things first and the new production host when ready. Remember to run the restore playbook with a sysadmin user with root privileges because it needs to become the app user in many tasks.
 
 ## Troubleshooting
 
