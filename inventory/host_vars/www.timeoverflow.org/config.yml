@@ -49,7 +49,7 @@ backups_role_enabled: true
 nginx_sites:
   timeoverflow_http:
     template: timeoverflow_http.conf.j2
-    server_name: "{{ inventory_hostname }}"
+    server_name: "timeoverflow.org"
   timeoverflow_www:
     template: timeoverflow.conf.j2
     server_name: "www.timeoverflow.org"
