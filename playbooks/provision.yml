@@ -33,6 +33,8 @@
       tags: webserver
     - role: geerlingguy.redis
     - role: background_jobs
+    - role: logrotate
+      tags: logrotate
     - role: coopdevs.backups_role
       when: backups_role_enabled
       tags: backups

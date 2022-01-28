@@ -1,0 +1,6 @@
+---
+- name: Configure logrotate
+  blockinfile:
+    path: /etc/logrotate.d/timeoverflow
+    block: "{{ logrotate_conf }}"
+    create: true

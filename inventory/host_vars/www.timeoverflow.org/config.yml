@@ -180,3 +180,12 @@ aws_bucket: timeoverflow-production
 aws_region: eu-west-3
 
 nginx_max_body_size: 15M
+
+logrotate_conf: |
+      /var/www/timeoverflow/current/log/*.log {
+             weekly
+             rotate 20
+             size 300M
+             compress
+             delaycompress
+      }
