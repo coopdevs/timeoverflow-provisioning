@@ -19,6 +19,9 @@ sys_admins:
   - name: kon
     ssh_key: "../pub_keys/kon.pub"
     state: present
+  - name: jordi
+    ssh_key: "../pub_keys/jordi.pub"
+    state: present
 
 developers:
   - name: sergi
