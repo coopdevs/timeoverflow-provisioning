@@ -35,6 +35,16 @@
     databases: all
     method: peer
 
+- name: Add hba entry for BI
+  postgresql_pg_hba:
+    dest: /etc/postgresql/9.4/main/pg_hba.conf
+    users: "{{ bi_user }}"
+    contype: hostssl
+    source: "{{ bi_source }}"
+    databases: "{{ database_name }}"
+    method: md5
+
+
 - name: Add user
   become: yes
   become_user: postgres
@@ -66,3 +76,34 @@
   postgresql_ext:
     name: unaccent
     db: "{{ database_name }}"
+
+
+- name: Add BI user
+  become: yes
+  become_user: postgres
+  postgresql_user:
+    name: "{{ bi_user }}"
+    db: "{{ database_name }}"
+    password: "{{ bi_password }}"
+    role_attr_flags: "{{ database_role_attributes }}"
+
+- name: Grant privs BI user
+  become: yes
+  become_user: postgres
+  postgresql_privs:
+    database: "{{ database_name }}"
+    state: present
+    privs: SELECT
+    type: table
+    schema: public
+    objs: ALL_IN_SCHEMA
+    roles: "{{ bi_user }}"
+
+- name: expose
+  become: yes
+  become_user: postgres
+  blockinfile:
+    create: yes
+    dest: /etc/postgresql/9.4/main/postgresql.conf
+    block: |
+      listen_addresses = '*'
