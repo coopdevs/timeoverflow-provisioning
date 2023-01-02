@@ -26,8 +26,8 @@
       default_gems_file: ../files/custom-gems
     - role: database
       tags: db
-    - role: elasticsearch
-      tags: es
+#   - role: elasticsearch
+#      tags: es
     - role: webserver
       when: not development_environment
       tags: webserver
