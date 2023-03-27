@@ -26,6 +26,9 @@ sys_admins:
   - name: lai
     ssh_key: "../pub_keys/lai.pub"
     state: present
+  - name: marc
+    ssh_key: "../pub_keys/marc.pub"
+    state: present
 
 developers:
   - name: sergi
