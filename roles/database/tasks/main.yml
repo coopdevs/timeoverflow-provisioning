@@ -43,6 +43,7 @@
     source: "{{ bi_source }}"
     databases: "{{ database_name }}"
     method: md5
+  when: bi_user is defined
 
 
 - name: Add user
@@ -86,6 +87,7 @@
     db: "{{ database_name }}"
     password: "{{ bi_password }}"
     role_attr_flags: "{{ database_role_attributes }}"
+  when: bi_user is defined
 
 - name: Grant privs BI user
   become: yes
@@ -98,6 +100,7 @@
     schema: public
     objs: ALL_IN_SCHEMA
     roles: "{{ bi_user }}"
+  when: bi_user is defined
 
 - name: expose
   become: yes
